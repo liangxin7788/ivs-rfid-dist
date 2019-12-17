@@ -16,9 +16,11 @@ export default new Router({
     },
     {
       path: '/index',
+      name: 'index',
       component: AboutUs
     },
     {
+      name: 'productCenter',
       path: '/productCenter',
       component: ProductCenter
     },
@@ -29,6 +31,7 @@ export default new Router({
     },
     {
       path: '/contactUs',
+      name: 'contactUs',
       component: ContactUs
     }
   ]

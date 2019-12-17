@@ -1,20 +1,13 @@
 <template>
     <div>
       <div>
-        <el-menu :router="true" :default-active="defaultActive" class="el-menu-demo" mode="horizontal"
+        <el-menu :default-active="defaultActive" class="el-menu-demo" mode="horizontal"
                  @select="handleSelect" style="width: 100%" >
           <el-menu-item index="/index">About Us</el-menu-item>
           <el-submenu index="/productCenter">
             <template slot="title">Product Center</template>
-            <el-menu-item index="2-1">Metal Tag</el-menu-item>
-            <el-menu-item index="2-2">Jewelry Tag</el-menu-item>
-            <el-menu-item index="2-3">Crispness Tag</el-menu-item>
-            <el-submenu index="2-4">
-              <template slot="title">Special Tag</template>
-              <el-menu-item index="2-4-1">special-1</el-menu-item>
-              <el-menu-item index="2-4-2">special-2</el-menu-item>
-              <el-menu-item index="2-4-3">special-3</el-menu-item>
-            </el-submenu>
+<!--            -->
+            <el-menu-item  :index="JSON.stringify(type)" v-for="(type, index) in typeList" :key="index">{{type.typeEn}}</el-menu-item>
           </el-submenu>
           <el-menu-item index="/applicationExample">Application Example</el-menu-item>
           <el-menu-item index="/contactUs">Contact Us</el-menu-item>
@@ -23,7 +16,7 @@
       </div>
       <div>
         <el-container style="width: 100%">
-          <el-main style="min-height: 100%">
+          <el-main class="navLi" style="min-height: 100%">
             <router-view/>
           </el-main>
         </el-container>
@@ -32,7 +25,6 @@
             <div class="in_foos_t_l">
               <div class="in_footnav">
                 <span>关于我们</span>
-<!--                href="./#/applicationExample"-->
                 <a @click="linkTo('applicationExample')">公司概况</a>
                 <a href="https://www.baidu.com">新闻动态</a>
                 <a href="https://www.baidu.com">联系我们</a>
@@ -51,9 +43,6 @@
             <div class="in_foos_t_r">
               <div class="in_followus">
                 <span>关注我们</span>
-<!--                <div>-->
-<!--                  <a href="http://weibo.com/p/1006061980226780/home?from=page_100606&amp;mod=TAB#place" class="in_QQ"><img src="cn/images/in_ico02.png" width="22"> 微博</a>-->
-<!--                </div>-->
                 <div class="wx_ewm">
                   <img src="../assets/weixin.jpg" width="100" height="100"><!--<span>官方微信</span>-->
                 </div>
@@ -70,18 +59,23 @@
 </template>
 
 <script>
+  import * as req from '@/utils/api'
   export default {
     name: "Index",
     data() {
       return {
-        defaultActive: '/index'
+        defaultActive: '/index',
+        typeList: []
       }
     },
     mounted() {
-      console.log('mounted')
-
       this.defaultActive = this.$route.path
       console.log(this.$route.path)
+      req.getRequest('/productType/getTypeList',{}).then(res => {
+        this.typeList = res.data.result || []
+      }).catch(e => {
+        console.log(e);
+      })
     },
     beforeRouteEnter (to, from, next) {
       console.log('1',to, from);
@@ -97,14 +91,34 @@
     },
     methods: {
       handleSelect(key, keyPath) {
-        console.log(key, keyPath);
+        // console.log(key, keyPath);
+
+        if(keyPath[0] != '/productCenter')
+          this.$router.push({
+            path: key,
+          })
+        else
+          this.$router.push({
+            name: `productCenter`,
+            query: {
+              tag: key
+            }
+          })
       },
       linkTo(path) {
         this.$router.push({ name: path })
         this.defaultActive = '/' + path
 
         console.log(this.defaultActive)
-      }
+      },
+      // routerToProductCenter(){
+      //   this.$router.push({
+      //     name: `productCenter`,
+      //     params: {
+      //       typeEn: 'enName', code: '8989'
+      //     }
+      //   })
+      // }
     }
   }
 </script>
