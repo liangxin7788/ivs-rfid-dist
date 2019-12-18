@@ -6,7 +6,6 @@
           <el-menu-item index="/index">About Us</el-menu-item>
           <el-submenu index="/productCenter">
             <template slot="title">Product Center</template>
-<!--            -->
             <el-menu-item  :index="JSON.stringify(type)" v-for="(type, index) in typeList" :key="index">{{type.typeEn}}</el-menu-item>
           </el-submenu>
           <el-menu-item index="/applicationExample">Application Example</el-menu-item>
@@ -20,7 +19,7 @@
             <router-view/>
           </el-main>
         </el-container>
-        <el-footer height="200px">
+        <el-footer class="myFooter" height="200px">
           <div class="in_foots_t">
             <div class="in_foos_t_l">
               <div class="in_footnav">
@@ -91,8 +90,7 @@
     },
     methods: {
       handleSelect(key, keyPath) {
-        // console.log(key, keyPath);
-
+        // console.log(key, keyPath,key.typeEn);
         if(keyPath[0] != '/productCenter')
           this.$router.push({
             path: key,
@@ -101,7 +99,7 @@
           this.$router.push({
             name: `productCenter`,
             query: {
-              tag: key
+              tag: JSON.parse(key).typeCode
             }
           })
       },
@@ -138,12 +136,12 @@
     line-height: 200px;
   }
 
-  .el-main {
-    background-color: #E9EEF3;
-    color: #333;
-    text-align: center;
-    line-height: 160px;
-  }
+  /*.el-main {*/
+  /*  background-color: #E9EEF3;*/
+  /*  color: #333;*/
+  /*  text-align: center;*/
+  /*  line-height: 160px;*/
+  /*}*/
 
   body > .el-container {
     margin-bottom: 40px;
@@ -174,5 +172,11 @@
   .in_foos_t_l, .in_foos_t_r {
     display: inline-block;
     vertical-align: top;
+  }
+
+  .myFooter {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
   }
 </style>
