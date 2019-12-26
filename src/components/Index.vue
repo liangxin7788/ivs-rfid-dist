@@ -3,7 +3,7 @@
   <el-container>
 
     <!--    头部-->
-    <el-header height="120px" >
+    <el-header>
       <el-menu :default-active="defaultActive" class="el-menu-demo" mode="horizontal"
                @select="handleSelect" style="width: 100%">
         <el-menu-item index="/index">About Us</el-menu-item>

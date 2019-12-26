@@ -2,7 +2,6 @@
   <div class="mainContent">
 
     <el-form class="contentForm" inline label-width="100px" label-position="right">
-
       <el-form-item label="product name">
         <el-input v-model="productTitle" placeholder="输入productTitle"></el-input>
       </el-form-item>
@@ -26,10 +25,9 @@
       fit
       size="medium"
       min-height="500"
-
     >
       <el-table-column
-        label="sample picture"
+        label="Sample Picture"
         width="180">
         <template slot-scope="scope">
           <img :src="scope.row.productPic.imageUrl" style="width: 80px; height: 80px">
@@ -40,7 +38,7 @@
         label="Product Name">
       </el-table-column>
       <el-table-column
-        label="Detail info">
+        label="Detail Info">
         <template slot-scope="scope">
           <span>{{scope.row.description.slice(0,20)}}</span>
           <span v-if="scope.row.description.length > 20">...</span>
