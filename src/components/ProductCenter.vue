@@ -22,7 +22,7 @@
         label="主图"
         width="180">
         <template slot-scope="scope">
-          <img :src="scope.row.productPic.imageUrl">
+          <img :src="scope.row.productPic.imageUrl" style="width: 80px; height: 80px">
         </template>
       </el-table-column>
       <el-table-column
