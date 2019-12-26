@@ -13,13 +13,13 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" plain @click="doSearch">搜索</el-button>
+        <el-button type="primary" plain @click="doSearch">Search</el-button>
       </el-form-item>
     </el-form>
 
     <el-table :data="productList" fit size="medium" @cell-click="cellclick">
       <el-table-column
-        label="主图"
+        label="sample picture"
         width="180">
         <template slot-scope="scope">
           <img :src="scope.row.productPic.imageUrl" style="width: 80px; height: 80px">
@@ -27,30 +27,26 @@
       </el-table-column>
       <el-table-column
         prop="enName"
-        label="名字">
+        label="Product Name">
       </el-table-column>
       <el-table-column
-        label="详情介绍">
+        label="Detail info">
         <template slot-scope="scope">
           <span>{{scope.row.description.slice(0,20)}}</span>
           <span v-if="scope.row.description.length > 20">...</span>
         </template>
       </el-table-column>
       <el-table-column
-        prop="createAt"
-        label="上传时间">
-      </el-table-column>
-      <el-table-column
         prop="model"
-        label="型号">
+        label="Model">
       </el-table-column>
       <el-table-column
-        prop="material"
-        label="材质">
+        prop="application"
+        label="Applications">
       </el-table-column>
       <el-table-column
-        prop="applyTo"
-        label="应用领域">
+        prop="createAt"
+        label="Create At">
       </el-table-column>
       <el-pagination
         slot="append"
