@@ -1,10 +1,12 @@
 <template>
   <div class="mainContent">
-    <el-form class="contentForm" inline label-width="100px" label-position="left">
+
+    <el-form class="contentForm" inline label-width="100px" label-position="right">
 
       <el-form-item label="product name">
-        <el-input v-model="productTitle"></el-input>
+        <el-input v-model="productTitle" placeholder="输入productTitle"></el-input>
       </el-form-item>
+
       <el-form-item label="tag type">
         <el-select v-model="productTypeCode">
           <el-option :value="type.typeCode" v-for="type in typeList" :key="type">
@@ -12,12 +14,20 @@
           </el-option>
         </el-select>
       </el-form-item>
+
       <el-form-item>
         <el-button type="primary" plain @click="doSearch">Search</el-button>
       </el-form-item>
     </el-form>
 
-    <el-table :data="productList" fit size="medium" @cell-click="cellclick">
+    <el-table
+      v-loading="loading"
+      :data="pagination.records"
+      fit
+      size="medium"
+      min-height="500"
+
+    >
       <el-table-column
         label="sample picture"
         width="180">
@@ -48,94 +58,163 @@
         prop="createAt"
         label="Create At">
       </el-table-column>
-      <el-pagination
-        slot="append"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="pageIndex"
-        :page-sizes="[10, 20, 50, 100]"
-        :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total">
-      </el-pagination>
+
     </el-table>
 
+    <el-pagination
+      style="margin-top: 15px"
+      background
+      slot="append"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      @prev-click="handlePrev"
+      @next-click="handleNext"
+      :current-page="pagination.current"
+      :page-sizes="[10, 20, 50, 100]"
+      :page-size="pagination.size"
+      :total="pagination.total"
+      layout="total, sizes, prev, pager, next, jumper"
+    >
+    </el-pagination>
   </div>
 </template>
 
 <script>
   import * as req from '@/utils/api'
-    export default {
-      name: "ProductCenter",
-      watch: {
-        '$route': function (){
-          let query = this.$route.query
-          console.log(query.tag)
-        }
-      },
-      data() {
-        return {
-          productList: [],
-          typeList: [],
-          productTypeCode: undefined,
-          productTitle: undefined,
-          pageIndex: undefined,
-          pageSize: undefined
-        }
-      },
-      methods: {
-        // getImage(imgs) {
-        //   let image = ''
-        //
-        //   imgs.forEach(item => {
-        //     if(item.isFirstImage)
-        //       image = item.imageUrl
-        //   });
-        //
-        //   return image
-        // },
-        doSearch () {
-          req.postRequest('/productInfo/getProductList',{
-            productTypeCode: this.productTypeCode || undefined,
-            productTitle: this.productTitle || undefined,
-            pageIndex: this.pageIndex || 0,
-            pageSize: this.pageSize || undefined,
-          }).then(res => {
-            console.log(res.data.result.records);
-            this.productList = res.data.result.records || []
-            this.total = res.data.result.total || 0
-          }).catch(e => {
-            console.log(e);
-          })
-        }
-      },
-      // created() {
-      //   this.doSearch()
-      // },
-      mounted() {
-        let query = this.$route.query
-        // console.log(JSON.parse(query.tag))
-        // let result = JSON.parse(query.tag)
-        let result = query.tag
 
-        req.postRequest('/productInfo/getProductList',{
-          productTypeCode: result,
-          pageIndex: this.pageIndex || 0,
-          pageSize: this.pageSize || 10,
+  export default {
+    name: "ProductCenter",
+    watch: {
+      '$route': function () {
+        let query = this.$route.query
+        console.log(query.tag)
+      }
+    },
+    data() {
+      return {
+        loading: true,
+        // productList: [],
+        typeList: [],
+        productTypeCode: undefined,
+        productTitle: undefined,
+        // pageIndex: 1,
+        // pageSize: 10,
+        pagination: {
+          records: [],
+          total: 0,
+          size: 5,
+          current: 1,
+          pages: 1
+        }
+
+      }
+    },
+    methods: {
+      // getImage(imgs) {
+      //   let image = ''
+      //
+      //   imgs.forEach(item => {
+      //     if(item.isFirstImage)
+      //       image = item.imageUrl
+      //   });
+      //
+      //   return image
+      // },
+
+      handleSizeChange(size){
+
+        this.pagination.size = size
+        this.getProductData(this.pagination.current,this.pagination.size,this.productTypeCode);
+      },
+
+      handleCurrentChange(current){
+
+        this.pagination.current = current
+        this.getProductData(this.pagination.current,this.pagination.size,this.productTypeCode);
+      },
+
+      handlePrev(current){
+
+        this.pagination.current = current
+        this.getProductData(this.pagination.current,this.pagination.size,this.productTypeCode);
+      },
+      handleNext(current){
+        this.pagination.current = current
+        this.getProductData(this.pagination.current,this.pagination.size,this.productTypeCode);
+      },
+
+      doSearch() {
+
+        // req.postRequest('/productInfo/getProductList', {
+        //   productTypeCode: this.productTypeCode || undefined,
+        //   productTitle: this.productTitle || undefined,
+        //   pageIndex: this.pagination.current,
+        //   pageSize: this.pagination.size ,
+        //
+        // }).then(res => {
+        //
+        //   //将分页数据解构赋值到pagination对象
+        //   this.pagination = res.data.result
+        //   this.loading = false
+        // }).catch(e => {
+        //   this.loading = false
+        // })
+        this.getProductData(this.pagination.current,this.pagination.size,this.productTypeCode,this.productTitle);
+
+      },
+
+      /**
+       * 获取产品数据列表
+       * @param current
+       * @param size
+       * @param type
+       * @param title
+       */
+      getProductData(current,size,type,title){
+        req.postRequest('/productInfo/getProductList', {
+          productTypeCode: type,
+          pageIndex: current,
+          pageSize: size,
+          productTitle: title ? title : ""
         }).then(res => {
-          this.productList = res.data.result || []
+
+          //将分页数据解构赋值到pagination对象
+          this.pagination = res.data.result
+          this.loading = false
+
         }).catch(e => {
           console.log(e);
+          this.loading = false
         })
 
-        req.getRequest('/productType/getTypeList',{}).then(res => {
+      },
+
+      /**
+       * 获取分类列表
+       */
+      getTypeList(){
+
+        req.getRequest('/productType/getTypeList', {}).then(res => {
           this.typeList = res.data.result || []
         }).catch(e => {
           console.log(e);
         })
-      },
+      }
 
-    }
+    },
+
+    created() {
+
+    },
+    mounted() {
+      let query = this.$route.query
+      let result = query.tag
+      this.productTypeCode = result
+      this.getProductData(this.pagination.current,this.pagination.size,this.productTypeCode);
+      this.getTypeList()
+    },
+
+  }
 </script>
 
 <style scoped>
