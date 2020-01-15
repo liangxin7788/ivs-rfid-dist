@@ -25,12 +25,13 @@
       fit
       size="medium"
       min-height="500"
+      style="width: 67%;"
     >
       <el-table-column
         label="Sample Picture"
         width="180">
         <template slot-scope="scope">
-          <img :src="scope.row.productPic.imageUrl" style="width: 80px; height: 80px">
+          <img :src="scope.row.images.split(',')[0]" style="width: 80px; height: 80px">
         </template>
       </el-table-column>
       <el-table-column
@@ -38,25 +39,21 @@
         label="Product Name">
       </el-table-column>
       <el-table-column
-        label="Detail Info">
-        <template slot-scope="scope">
-          <span>{{scope.row.description.slice(0,20)}}</span>
-          <span v-if="scope.row.description.length > 20">...</span>
-        </template>
-      </el-table-column>
-      <el-table-column
         prop="model"
         label="Model">
+      </el-table-column>
+      <el-table-column
+        prop="chipType"
+        label="Chip Type">
+      </el-table-column>
+      <el-table-column
+        prop="readingRange"
+        label="Reading Range">
       </el-table-column>
       <el-table-column
         prop="application"
         label="Applications">
       </el-table-column>
-      <el-table-column
-        prop="createAt"
-        label="Create At">
-      </el-table-column>
-
     </el-table>
 
     <el-pagination
