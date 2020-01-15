@@ -7,7 +7,7 @@
       </el-form-item>
 
       <el-form-item label="tag type">
-        <el-select v-model="productTypeCode">
+        <el-select v-model="productTypeCode" clearable>
           <el-option :value="type.typeCode" v-for="type in typeList" :key="type">
             {{type.typeEn}}
           </el-option>
@@ -25,7 +25,7 @@
       fit
       size="medium"
       min-height="500"
-      style="width: 67%;"
+      style="width: 67%;margin: 0 auto"
     >
       <el-table-column
         label="Sample Picture"
@@ -97,7 +97,7 @@
         pagination: {
           records: [],
           total: 0,
-          size: 5,
+          size: 10,
           current: 1,
           pages: 1
         }
