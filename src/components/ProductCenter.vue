@@ -31,7 +31,7 @@
         label="Sample Picture"
         width="180">
         <template slot-scope="scope">
-          <img :src="scope.row.images.split(',')[0]" style="width: 80px; height: 80px">
+          <img :src="scope.row.images.split(',')[0]" style="width: auto; height: auto">
         </template>
       </el-table-column>
       <el-table-column
@@ -83,6 +83,8 @@
       '$route': function () {
         let query = this.$route.query
         console.log(query.tag)
+        this.productTypeCode=query.tag
+        this.doSearch()
       }
     },
     data() {
