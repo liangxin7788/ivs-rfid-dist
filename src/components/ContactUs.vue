@@ -28,7 +28,7 @@
           <el-form-item label="Massage:">
             <el-input type="textarea" :autosize="{ minRows: 8, maxRows: 50}" v-model="massage" style="margin: 50px 0 0  0; width: 500px; text-align: left"></el-input>
           </el-form-item>
-          <el-form-item style="text-align: right">
+          <el-form-item style="text-align: center">
             <el-button type="primary" @click="onSubmit">Submit</el-button>
             <el-button @click="resetForm">Cancel</el-button>
           </el-form-item>
@@ -75,8 +75,15 @@
             company: this.company || undefined,
           }).then(res => {
             console.log(res.data.result);
+            if (res.data && res.data.errorMsg)
+            this.$notify({
+              title: 'fail to leaf your massage!',
+              message: res.data.errorMsg,
+              offset: 50
+            });
           }).catch(e => {
             console.log(e);
+            // if (e.data && e.data.errorMsg) { this.$Message.error(e.data.errorMsg) }
           })
         },
         resetForm() {
@@ -86,15 +93,6 @@
           this.phoneNumber = ''
           this.comeFrom = ''
           this.company = ''
-
-          // return {
-          //   name: '',
-          //   customerEmail: '',
-          //   massage: '',
-          //   phoneNumber: '',
-          //   comeFrom: '',
-          //   company: ''
-          // }
         }
       }
     }
@@ -106,20 +104,17 @@
     padding: 0;
   }
   .con {
-    /*width: 500px;*/
     height: 400px;
     margin: 0 200px;
   }
   .con > div {
     width: 50%;
-    /*height: 100%;*/
   }
   .a {
     text-align: left;
     line-height: 40px;
     margin-left: 0;
     width: 400px;
-    /*background: red;*/
     float: left;
   }
   .c .el-input{
@@ -127,7 +122,6 @@
   }
   .b {
     text-align: left;
-    /*background: yellow;*/
     float: right;
   }
   .aaa  .el-carousel__container {
