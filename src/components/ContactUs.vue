@@ -26,9 +26,9 @@
               <el-input type="input" v-model="phoneNumber" placeholder="Phone(un-required)" size="medium"></el-input>
           </div>
           <el-form-item label="Massage:">
-            <el-input type="textarea" :autosize="{ minRows: 8, maxRows: 50}" v-model="massage" style="margin: 50px 0; width: 500px; text-align: left"></el-input>
+            <el-input type="textarea" :autosize="{ minRows: 8, maxRows: 50}" v-model="massage" style="margin: 50px 0 0  0; width: 500px; text-align: left"></el-input>
           </el-form-item>
-          <el-form-item>
+          <el-form-item style="text-align: right">
             <el-button type="primary" @click="onSubmit">Submit</el-button>
             <el-button @click="resetForm">Cancel</el-button>
           </el-form-item>
@@ -80,14 +80,21 @@
           })
         },
         resetForm() {
-          return {
-            name: '',
-            customerEmail: '',
-            massage: '',
-            phoneNumber: '',
-            comeFrom: '',
-            company: ''
-          }
+          this.name = ''
+          this.customerEmail = ''
+          this.massage = ''
+          this.phoneNumber = ''
+          this.comeFrom = ''
+          this.company = ''
+
+          // return {
+          //   name: '',
+          //   customerEmail: '',
+          //   massage: '',
+          //   phoneNumber: '',
+          //   comeFrom: '',
+          //   company: ''
+          // }
         }
       }
     }
