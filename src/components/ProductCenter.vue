@@ -43,6 +43,10 @@
         label="Model">
       </el-table-column>
       <el-table-column
+        prop="size"
+        label="Size">
+      </el-table-column>
+      <el-table-column
         prop="chipType"
         label="Chip Type">
       </el-table-column>
