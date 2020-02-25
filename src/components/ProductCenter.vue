@@ -2,13 +2,12 @@
   <div class="mainContent">
 
     <el-form class="contentForm" inline label-width="100px" label-position="right">
-
       <el-form-item label="product name">
         <el-input v-model="productTitle" placeholder="输入productTitle"></el-input>
       </el-form-item>
 
       <el-form-item label="tag type">
-        <el-select v-model="productTypeCode">
+        <el-select v-model="productTypeCode" clearable>
           <el-option :value="type.typeCode" v-for="type in typeList" :key="type">
             {{type.typeEn}}
           </el-option>
@@ -21,18 +20,21 @@
     </el-form>
 
     <el-table
+      @row-click="handleRowClick"
       v-loading="loading"
       :data="pagination.records"
       fit
       size="medium"
       min-height="500"
-
+      style="width: 67%;margin: 0 auto"
     >
       <el-table-column
-        label="sample picture"
+        label="Sample Picture"
         width="180">
         <template slot-scope="scope">
-          <img :src="scope.row.productPic.imageUrl" style="width: 80px; height: 80px">
+          <el-image @click.stop="imgClick(scope.row)" :src="scope.row.images.split(',')[0]"
+               style="width: auto; height: auto">
+          </el-image>
         </template>
       </el-table-column>
       <el-table-column
@@ -40,25 +42,25 @@
         label="Product Name">
       </el-table-column>
       <el-table-column
-        label="Detail info">
-        <template slot-scope="scope">
-          <span>{{scope.row.description.slice(0,20)}}</span>
-          <span v-if="scope.row.description.length > 20">...</span>
-        </template>
-      </el-table-column>
-      <el-table-column
         prop="model"
         label="Model">
+      </el-table-column>
+      <el-table-column
+        prop="size"
+        label="Size">
+      </el-table-column>
+      <el-table-column
+        prop="chipType"
+        label="Chip Type">
+      </el-table-column>
+      <el-table-column
+        prop="readingRange"
+        label="Reading Range">
       </el-table-column>
       <el-table-column
         prop="application"
         label="Applications">
       </el-table-column>
-      <el-table-column
-        prop="createAt"
-        label="Create At">
-      </el-table-column>
-
     </el-table>
 
     <el-pagination
@@ -76,6 +78,23 @@
       layout="total, sizes, prev, pager, next, jumper"
     >
     </el-pagination>
+
+
+    <!--预览窗口-->
+    <el-dialog
+      :title="dialog.title"
+      :visible.sync="dialogVisible"
+      width="60%"
+    >
+
+      <el-image :src="dialog.imgUrl">
+        <div slot="placeholder" class="image-slot">
+          加载中<span class="dot">...</span>
+        </div>
+      </el-image>
+
+    </el-dialog>
+
   </div>
 </template>
 
@@ -88,6 +107,8 @@
       '$route': function () {
         let query = this.$route.query
         console.log(query.tag)
+        this.productTypeCode = query.tag
+        this.doSearch()
       }
     },
     data() {
@@ -102,10 +123,17 @@
         pagination: {
           records: [],
           total: 0,
-          size: 5,
+          size: 10,
           current: 1,
           pages: 1
-        }
+        },
+
+        dialog: {
+          title: "提示",
+          imgUrl: ""
+        },
+        dialogVisible: false
+
 
       }
     },
@@ -121,26 +149,26 @@
       //   return image
       // },
 
-      handleSizeChange(size){
+      handleSizeChange(size) {
 
         this.pagination.size = size
-        this.getProductData(this.pagination.current,this.pagination.size,this.productTypeCode);
+        this.getProductData(this.pagination.current, this.pagination.size, this.productTypeCode);
       },
 
-      handleCurrentChange(current){
+      handleCurrentChange(current) {
 
         this.pagination.current = current
-        this.getProductData(this.pagination.current,this.pagination.size,this.productTypeCode);
+        this.getProductData(this.pagination.current, this.pagination.size, this.productTypeCode);
       },
 
-      handlePrev(current){
+      handlePrev(current) {
 
         this.pagination.current = current
-        this.getProductData(this.pagination.current,this.pagination.size,this.productTypeCode);
+        this.getProductData(this.pagination.current, this.pagination.size, this.productTypeCode);
       },
-      handleNext(current){
+      handleNext(current) {
         this.pagination.current = current
-        this.getProductData(this.pagination.current,this.pagination.size,this.productTypeCode);
+        this.getProductData(this.pagination.current, this.pagination.size, this.productTypeCode);
       },
 
       doSearch() {
@@ -159,7 +187,7 @@
         // }).catch(e => {
         //   this.loading = false
         // })
-        this.getProductData(this.pagination.current,this.pagination.size,this.productTypeCode,this.productTitle);
+        this.getProductData(this.pagination.current, this.pagination.size, this.productTypeCode, this.productTitle);
 
       },
 
@@ -170,7 +198,7 @@
        * @param type
        * @param title
        */
-      getProductData(current,size,type,title){
+      getProductData(current, size, type, title) {
         req.postRequest('/productInfo/getProductList', {
           productTypeCode: type,
           pageIndex: current,
@@ -192,13 +220,37 @@
       /**
        * 获取分类列表
        */
-      getTypeList(){
+      getTypeList() {
 
         req.getRequest('/productType/getTypeList', {}).then(res => {
           this.typeList = res.data.result || []
         }).catch(e => {
           console.log(e);
         })
+      },
+
+      /**
+       * 图片
+       * @param row
+       */
+      imgClick(row) {
+
+        this.dialog.imgUrl = row.images
+        this.dialog.title = row.cnName
+        this.dialogVisible = true
+      },
+
+
+      /**
+       * 点击表格 行
+       * @param row
+       * @param column
+       * @param event
+       */
+      handleRowClick(row, column, event){
+
+      this.$router.push("/productDetail?id="+row.id)
+
       }
 
     },
@@ -210,7 +262,7 @@
       let query = this.$route.query
       let result = query.tag
       this.productTypeCode = result
-      this.getProductData(this.pagination.current,this.pagination.size,this.productTypeCode);
+      this.getProductData(this.pagination.current, this.pagination.size, this.productTypeCode);
       this.getTypeList()
     },
 

@@ -4,7 +4,8 @@ import AboutUs from '@/components/AboutUs'
 import ProductCenter from '@/components/ProductCenter'
 import ApplicationExample from '@/components/ApplicationExample'
 import ContactUs from '@/components/ContactUs'
-import Admin from "@/components/Admin";
+import Admin from "@/components/Admin"
+import ProductDetail from "../components/ProductDetail";
 Vue.use(Router)
 
 export default new Router({
@@ -37,6 +38,10 @@ export default new Router({
     {
       path:"/admin",
       component: Admin
+    },
+    {
+      path: "/productDetail",
+      component: ProductDetail
     }
   ]
 })
