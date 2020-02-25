@@ -3,7 +3,7 @@
   <el-container>
 
     <!--    头部-->
-    <el-header height="120px" >
+    <el-header height="120px">
       <el-menu :default-active="defaultActive" class="el-menu-demo" mode="horizontal"
                @select="handleSelect" style="width: 100%">
         <el-menu-item index="/index">About Us</el-menu-item>
@@ -14,7 +14,7 @@
         </el-submenu>
         <el-menu-item index="/applicationExample">Application Example</el-menu-item>
         <el-menu-item index="/contactUs">Contact Us</el-menu-item>
-        <el-menu-item index="/login"><a href="https://www.baidu.com" target="_blank">Login In</a></el-menu-item>
+        <el-button type="primary" @click="signInDialog">Sign In</el-button>
       </el-menu>
     </el-header>
 
@@ -30,7 +30,32 @@
       <Footer></Footer>
     </el-footer>
 
+    <div>
+      <el-dialog
+        :before-close="()=>{dialogVisible = false}"
+        title="登录"
+        :visible="dialogVisible"
+        width="30%"
+      >
+
+        <el-form ref="form" :model="form" label-width="80px">
+
+          <el-form-item label="账号">
+            <el-input placeholder="请输入账号" v-model="form.username" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="密码">
+            <el-input placeholder="请输入密码" v-model="form.password" show-password></el-input>
+          </el-form-item>
+        </el-form>
+
+        <el-button class="loginBtn" type="primary" round @click="signIn">登 录</el-button>
+
+
+      </el-dialog>
+    </div>
+
   </el-container>
+
 
 </template>
 
@@ -47,12 +72,18 @@
     data() {
       return {
         defaultActive: '/index',
-        typeList: []
+        typeList: [],
+        dialogVisible: false,
+        form:{
+          username: '',
+          password: ''
+        }
       }
     },
     mounted() {
+      console.log(this.$router);
       this.defaultActive = this.$route.path
-      console.log(this.$route.path)
+      // console.log(this.$route.path)
       req.getRequest('/productType/getTypeList', {}).then(res => {
         this.typeList = res.data.result || []
       }).catch(e => {
@@ -85,13 +116,50 @@
               tag: JSON.parse(key).typeCode
             }
           })
-      },
-      linkTo(path) {
-        this.$router.push({name: path})
-        this.defaultActive = '/' + path
 
-        console.log(this.defaultActive)
       },
+      // linkTo(path) {
+      //   this.$router.push({name: path})
+      //   this.defaultActive = '/' + path
+      //
+      //   console.log(this.defaultActive)
+      // },
+
+      signInDialog() {
+        this.dialogVisible = true
+      },
+
+      signIn(){
+
+        req.postRequest("/login",
+          {
+            "userName": this.form.username,
+            "password": this.form.password
+          })
+          .then(res=>{
+            if (res.result === null){
+              this.$message.error({
+                message: res.data.errorMsg
+              });
+            }else {
+              this.$message.success({
+                message: '登陆成功!'
+              })
+
+              this.$router.push({path: "/admin"})
+
+              //保存用户数据到本地
+              localStorage.setItem("userInfo", JSON.stringify(res.data.result))
+
+            }
+
+        }).catch(err=>{
+
+          console.log(err);
+        })
+
+      }
+
       // routerToProductCenter(){
       //   this.$router.push({
       //     name: `productCenter`,
@@ -132,6 +200,8 @@
   .el-container:nth-child(7) .el-aside {
     line-height: 320px;
   }
-
+.loginBtn{
+  width: 50%;
+}
 
 </style>

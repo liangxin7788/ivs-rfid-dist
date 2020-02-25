@@ -4,7 +4,7 @@ import AboutUs from '@/components/AboutUs'
 import ProductCenter from '@/components/ProductCenter'
 import ApplicationExample from '@/components/ApplicationExample'
 import ContactUs from '@/components/ContactUs'
-
+import Admin from "@/components/Admin";
 Vue.use(Router)
 
 export default new Router({
@@ -33,6 +33,10 @@ export default new Router({
       path: '/contactUs',
       name: 'contactUs',
       component: ContactUs
+    },
+    {
+      path:"/admin",
+      component: Admin
     }
   ]
 })

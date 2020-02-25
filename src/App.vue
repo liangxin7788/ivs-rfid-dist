@@ -8,9 +8,10 @@
 
 <script>
 import Index from "./components/Index";
+import Admin from "./components/Admin";
 export default {
   name: 'App',
-  components: {Index}
+  components: {Index,Admin}
 }
 </script>
 
