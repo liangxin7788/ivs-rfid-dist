@@ -84,10 +84,16 @@
               message: res.data.errorMsg,
               offset: 50
             });
+            else
+              this.$notify({
+                title: 'Thank you for your message and we will contact you soon!',
+                offset: 50
+              });
           }).catch(e => {
             console.log(e);
             // if (e.data && e.data.errorMsg) { this.$Message.error(e.data.errorMsg) }
           })
+          this.resetForm()
         },
         resetForm() {
           this.name = ''

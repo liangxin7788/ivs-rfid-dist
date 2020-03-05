@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h3>{{title}}</h3>
     <div>
       <el-carousel :interval="5000" arrow="always">
         <el-carousel-item v-for="(img,index) in imgList" :key="index">

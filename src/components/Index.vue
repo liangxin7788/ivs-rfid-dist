@@ -1,7 +1,6 @@
 <template>
 
   <el-container>
-
     <!--    头部-->
     <el-header height="120px">
       <el-menu :default-active="defaultActive" class="el-menu-demo" mode="horizontal"
@@ -20,9 +19,7 @@
 
     <!--    内容区-->
     <el-main class="navLi" style="min-height: 700px">
-
       <router-view/>
-
     </el-main>
 
     <!--底部-->
