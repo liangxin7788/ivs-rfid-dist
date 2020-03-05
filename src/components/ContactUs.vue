@@ -19,9 +19,10 @@
           <div class="c">
               <el-input type="input" v-model="name" placeholder="Your Name(required)" size="medium"></el-input>
               <el-input type="input" v-model="customerEmail" placeholder="E-mail(required)" size="medium"></el-input>
+            <el-input type="input" v-model="comeFrom" placeholder="Country(required)" size="medium"></el-input>
           </div><br>
           <div class="c">
-              <el-input type="input" v-model="comeFrom" placeholder="Country(un-required)" size="medium"></el-input>
+              <el-input type="input" v-model="address" placeholder="Address(un-required)" size="medium"></el-input>
               <el-input type="input" v-model="company" placeholder="Company(un-required)" size="medium"></el-input>
               <el-input type="input" v-model="phoneNumber" placeholder="Phone(un-required)" size="medium"></el-input>
           </div>
@@ -54,13 +55,14 @@
           phoneNumber: '',
           comeFrom: '',
           company: '',
+          address: '',
           massage: ''
         }
       },
       mounted() {
         this.introduction = 'Company: SZ IVS Technologies CO.,LTD.\n' +
           'Address: 深圳市龙岗区平湖街道新木社区新木路321-3号新木半里大厦C座1413\n' +
-          'Tel: (0755)8888 8888\nFax: (0755)8888 8889\nP.C: 351100\nE-mail: Sharon.loo@outlook.com\n' +
+          'Tel: (0755)8888 8888\nFax: (0755)8888 8889\nSkype: ivsrfid\nE-mail: Sharon.loo@outlook.com\n' +
           'WhatsApp: +86 158 1429 5175'
       },
       methods: {
@@ -73,6 +75,7 @@
             phoneNumber: this.phoneNumber || undefined,
             comeFrom: this.comeFrom || undefined,
             company: this.company || undefined,
+            address: this.address || undefined,
           }).then(res => {
             console.log(res.data.result);
             if (res.data && res.data.errorMsg)
@@ -93,6 +96,7 @@
           this.phoneNumber = ''
           this.comeFrom = ''
           this.company = ''
+          this.address = ''
         }
       }
     }

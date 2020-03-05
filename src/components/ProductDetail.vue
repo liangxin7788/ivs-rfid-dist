@@ -2,7 +2,7 @@
   <div>
 
     <div class="bar">
-      <el-button @click="backPerv" icon="el-icon-arrow-left" round>返回</el-button>
+      <el-button @click="backPerv" icon="el-icon-arrow-left" round>return</el-button>
     </div>
 
     <el-container>
@@ -10,7 +10,7 @@
       <el-aside width="30%" class="aside">
         <el-image :src="productDetailObj.images">
           <div slot="placeholder" class="image-slot">
-            加载中<span class="dot">...</span>
+            Loading...<span class="dot">...</span>
           </div>
         </el-image>
 
