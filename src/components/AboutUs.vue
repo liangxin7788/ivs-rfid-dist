@@ -3,7 +3,6 @@
     <el-card class="card" style="width: 35%">
       <div slot="header" style="line-height: 30px">
         <span>{{title}}</span>
-        <!--<el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>-->
       </div>
       <div class="text item" style="line-height: 30px; text-align: left">
         {{content}}
@@ -11,16 +10,19 @@
     </el-card>
     <el-card class="card" style="width: 35%">
       <div slot="header" style="line-height: 30px">
-        <span>最新动态</span>
+        <span>news</span>
       </div>
-      <div  style="line-height: 30px"  v-for="(company, index) in companys.slice(1, showLength)" :key="index" class="text item">
-        {{company.content}}
+      <div style="line-height: 30px; text-align: left"  v-for="(company, index) in companys.slice(1, showLength)" :key="index" class="text item">
+        <span>{{company.title.slice(0,50)}}</span>
+        <span v-if="company.title.length > 50">...</span>
       </div>
       <div >
-        <span v-if="showLength == 11" @click="showLength = companys.length" style="text-decoration: underline">展开</span>
-        <span v-else @click="showLength = 11" style="text-decoration: underline">收起</span>
+        <span v-if="showLength == 11" @click="showLength = companys.length" style="text-decoration: underline">Open...</span>
+        <span v-else @click="showLength = 11" style="text-decoration: underline">Close...</span>
       </div>
+
     </el-card>
+
   </div>
 </template>
 

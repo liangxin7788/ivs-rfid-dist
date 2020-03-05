@@ -89,7 +89,7 @@
 
       <el-image :src="dialog.imgUrl">
         <div slot="placeholder" class="image-slot">
-          加载中<span class="dot">...</span>
+          Loading...<span class="dot">...</span>
         </div>
       </el-image>
 
