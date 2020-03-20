@@ -84,7 +84,7 @@
     <el-dialog
       :title="dialog.title"
       :visible.sync="dialogVisible"
-      width="60%"
+      width="30%"
     >
 
       <el-image :src="dialog.imgUrl">

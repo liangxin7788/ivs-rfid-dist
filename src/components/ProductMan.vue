@@ -25,7 +25,7 @@
           icon="el-icon-plus"
           type="success"
           @click="dialogFormVisible = true">
-          添加用户</el-button>
+          添加产品</el-button>
       </el-col>
     </el-row>
 
@@ -47,7 +47,7 @@
       <el-table-column
         fixed
         prop="id"
-        label="产品id">
+        label="产品样品图">
         <template slot-scope="scope">
           <el-image contain style="width: 100px;height: 100px" :src="scope.row.images"></el-image>
         </template>
@@ -59,9 +59,10 @@
       </el-table-column>
       <el-table-column
         label="操作"
-        width="100">
+        width="150">
         <template slot-scope="scope">
-          <el-button type="danger" @click="doDelete(scope.row)" color="red" size="small">删除</el-button>
+          <el-button @click="doEdit(scope.row)" size="mini">编辑</el-button>
+          <el-button type="danger" @click="doDelete(scope.row)" color="red" size="mini">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -86,20 +87,28 @@ import * as req from '@/utils/api'
         dialogFormVisible: false,
         tableColumns: [
           {
-            prop: 'id',
-            label: 'id'
+            prop: 'enName',
+            label: '产品英文名称'
           },
           {
             prop: 'cnName',
-            label: '产品名称'
+            label: '产品中文名称'
           },
           {
             prop: 'application',
             label: '应用于'
           },
           {
+            prop: 'size',
+            label: '尺寸'
+          },
+          {
             prop: 'chipType',
-            label: 'chip-type'
+            label: '芯片类型'
+          },
+          {
+            prop: 'readingRange',
+            label: '读距'
           }
         ],
         pageSize: 50, // 一页显示多少条数据，常量。
@@ -150,6 +159,9 @@ import * as req from '@/utils/api'
         })
       },
       doDelete  (data) {
+        console.log(data)
+      },
+      doEdit (data) {
         console.log(data)
       }
     }
