@@ -9,7 +9,7 @@ import echarts from 'echarts';
 import Axios from 'axios';
 
 Vue.config.productionTip = false
-Vue.use(ElementUI);
+Vue.use(ElementUI,{size: 'mini'});
 Vue.prototype.$axios = Axios;
 Vue.prototype.$echarts = echarts;
 

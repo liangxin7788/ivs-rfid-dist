@@ -6,6 +6,10 @@ import ApplicationExample from '@/components/ApplicationExample'
 import ContactUs from '@/components/ContactUs'
 import Admin from "@/components/Admin"
 import ProductDetail from "../components/ProductDetail";
+import ProdTypeMan from '@/components/ProdTypeMan'
+import ProductMan from '@/components/ProductMan'
+import UseForMan from '@/components/UseForMan'
+import UserMan from '@/components/UserMan'
 Vue.use(Router)
 
 export default new Router({
@@ -37,7 +41,29 @@ export default new Router({
     },
     {
       path:"/admin",
-      component: Admin
+      component: Admin,
+      children: [
+        {
+          path: 'productType',
+          name: 'ProdTypeMan',
+          component: ProdTypeMan
+        },
+        {
+          path: 'product',
+          name: 'ProductMan',
+          component: ProductMan
+        },
+        {
+          path: 'user',
+          name: 'UserMan',
+          component: UserMan
+        },
+        {
+          path: 'usedes',
+          name: 'UseForMan',
+          component: UseForMan
+        }
+      ]
     },
     {
       path: "/productDetail",

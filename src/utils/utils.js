@@ -8,9 +8,9 @@ const getCookie = function (name) {
   }
 }
 const setCookie = function (name, value) {
-  var Days = 30;
+  var Days = 0.5; // cookie 半天失效
   var exp = new Date();
-  exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 30);
+  exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
   document.cookie = name + '=' + escape(value) + ';expires=' + exp.toGMTString();
 }
 const deleteCookie = function (name) {

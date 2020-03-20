@@ -1,24 +1,33 @@
 <template>
-
   <el-container>
-    <!--    头部-->
-    <el-header height="120px">
-      <el-menu :default-active="defaultActive" class="el-menu-demo" mode="horizontal"
-               @select="handleSelect" style="width: 100%">
-        <el-menu-item index="/index">About Us</el-menu-item>
-        <el-submenu index="/productCenter">
-          <template slot="title">Product Center</template>
-          <el-menu-item :index="JSON.stringify(type)" v-for="(type, index) in typeList" :key="index">{{type.typeEn}}
-          </el-menu-item>
-        </el-submenu>
-        <el-menu-item index="/applicationExample">Application Example</el-menu-item>
-        <el-menu-item index="/contactUs">Contact Us</el-menu-item>
-        <el-button type="primary" @click="signInDialog">Sign In</el-button>
-      </el-menu>
+    <!-- 头部-->
+    <el-header>
+      <el-row :gutter="20">
+        <el-col :span="20">
+          <el-menu :default-active="defaultActive" class="el-menu-header" mode="horizontal"
+                   @select="handleSelect" >
+            <el-menu-item index="/index">About Us</el-menu-item>
+            <el-submenu index="/productCenter">
+              <template slot="title">Product Center</template>
+              <el-menu-item :index="JSON.stringify(type.id)" v-for="(type, index) in typeList" :key="index">{{type.typeEn}}
+              </el-menu-item>
+            </el-submenu>
+            <el-menu-item index="/applicationExample">Application Example</el-menu-item>
+            <el-menu-item index="/contactUs">Contact Us</el-menu-item>
+            <el-menu-item index="/admin" v-show="isAdmin">管理中心</el-menu-item>
+          </el-menu>
+        </el-col>
+        <div :span="4" style="height: 60px;line-height: 60px;border-bottom: 1px solid #eee">
+          <el-button type="primary" @click="signInDialog" v-show="!isAdmin">Sign In</el-button>
+          <el-button type="danger" plain  @click="logout" v-show="isAdmin">
+            <i class="el-icon-switch-button" color="red"></i>
+            logout</el-button>
+        </div>
+      </el-row>
     </el-header>
 
     <!--    内容区-->
-    <el-main class="navLi" style="min-height: 700px">
+    <el-main class="navLi" style="min-height: 700px;padding: 0;">
       <router-view/>
     </el-main>
 
@@ -29,10 +38,10 @@
 
     <div>
       <el-dialog
-        :before-close="()=>{dialogVisible = false}"
+        @close="dialogVisible=false"
         title="登录"
         :visible="dialogVisible"
-        width="30%"
+        width="350px"
       >
 
         <el-form ref="form" :model="form" label-width="80px">
@@ -58,16 +67,16 @@
 
 <script>
   import * as req from '@/utils/api'
+  import utils from '@/utils/utils'
   import Footer from "./Footer";
-
   export default {
     name: "Index",
     components: {
       Footer
     },
-
     data() {
       return {
+        isAdmin: false,
         defaultActive: '/index',
         typeList: [],
         dialogVisible: false,
@@ -77,8 +86,16 @@
         }
       }
     },
+    watch: {
+      $route (to, from1) {
+        console.log(to.path, from1.path);
+        if(to.path === '/admin' && !utils.getCookie('username')) {
+          this.dialogVisible = true
+        }
+      }
+    },
     mounted() {
-      console.log(this.$router);
+      this.isAdmin = !!utils.getCookie('username')
       this.defaultActive = this.$route.path
       // console.log(this.$route.path)
       req.getRequest('/productType/getTypeList', {}).then(res => {
@@ -86,18 +103,6 @@
       }).catch(e => {
         console.log(e);
       })
-    },
-    beforeRouteEnter(to, from, next) {
-      console.log('1', to, from);
-      next()
-    },
-    beforeRouteUpdate(to, from, next) {
-      console.log('11', to, from);
-      next()
-    },
-    beforeRouteLeave(to, from, next) {
-      console.log('111', to, from);
-      next()
     },
     methods: {
       handleSelect(key, keyPath) {
@@ -125,28 +130,45 @@
       signInDialog() {
         this.dialogVisible = true
       },
-
+      logout () {
+        this.$confirm('是否确认退出？', '警告',{
+          confirmButtonText: '退出',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          utils.deleteCookie('username')
+          this.$router.push('/index')
+          this.isAdmin = false
+          this.defaultActive = '/index'
+          this.$message({
+            type: 'success',
+            message: '已退出管理员'
+          });
+        })
+      },
       signIn(){
-
         req.postRequest("/login",
           {
             "userName": this.form.username,
             "password": this.form.password
           })
           .then(res=>{
-            if (res.result === null){
+            this.dialogVisible = false
+            if (!res.data.success){
+              this.isAdmin = false
               this.$message.error({
                 message: res.data.errorMsg
               });
             }else {
               this.$message.success({
                 message: '登陆成功!'
-              })
-
+              });
+              this.isAdmin = true
               this.$router.push({path: "/admin"})
-
+              this.defaultActive = '/admin'
               //保存用户数据到本地
-              localStorage.setItem("userInfo", JSON.stringify(res.data.result))
+              utils.setCookie('username', this.form.username)
+              // localStorage.setItem("userInfo", JSON.stringify(res.data.result))
 
             }
 
@@ -170,7 +192,6 @@
 </script>
 
 <style scoped>
-
 
   .myFooter {
     background-color: #303848;
