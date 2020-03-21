@@ -59,7 +59,7 @@
       </el-table-column>
       <el-table-column
         label="操作"
-        width="150">
+        width="200">
         <template slot-scope="scope">
           <el-button @click="doEdit(scope.row)" size="mini">编辑</el-button>
           <el-button type="danger" @click="doDelete(scope.row)" color="red" size="mini">删除</el-button>
@@ -160,6 +160,28 @@ import * as req from '@/utils/api'
       },
       doDelete  (data) {
         console.log(data)
+
+        this.$confirm(`是否确认删除 产品 : ${data.cnName}？`, '警告',{
+          center: true,
+          confirmButtonText: '确认',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          req.getRequest('/productInfo/delProduct', {productId: data.id}).then(res => {
+            let message = res.data.result
+            let type = 'success'
+            if(!res.data.success) {
+              message=res.data.errorMsg
+              type = 'error'
+            }
+            this.$message({
+              message,
+              type
+            });
+            this.getProducts()
+          })
+        })
+
       },
       doEdit (data) {
         console.log(data)
