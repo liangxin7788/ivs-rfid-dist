@@ -25,8 +25,18 @@
 
     <el-dialog title="添加应用" :visible.sync="dialogFormVisible" width="400px" center>
       <el-form ref="form" :model="form">
-        <el-form-item label="图片" label-width="80px" prop="images">
-          <el-input v-model="form.images" autocomplete="off"></el-input>
+<!--        <el-form-item label="图片" label-width="80px" prop="images">-->
+<!--          <el-input v-model="form.images" autocomplete="off"></el-input>-->
+<!--        </el-form-item>-->
+        <el-form-item label="应用图片样例" >
+          <el-upload
+            action=""
+            :on-change="handOnchange"
+            multiple
+            :show-file-list="false"
+            :auto-upload="false">
+            <el-button size="small" type="primary">选择图片（可多选）</el-button>
+          </el-upload>
         </el-form-item>
         <el-form-item label="应用类型" label-width="80px" prop="appType">
           <el-input v-model="form.appType" autocomplete="off" ></el-input>
@@ -106,7 +116,7 @@
         //   ],
         // },
         form: {
-          images: '',
+          images: [],
           appType: '',
           description: ''
         },
@@ -117,6 +127,9 @@
       this.getData()
     },
     methods: {
+      handOnchange(file, fileList) {
+        this.form.images = fileList.map(item => item.raw)
+      },
       editProductType (data){
         console.log(data);
       },
@@ -144,33 +157,30 @@
         })
       },
       confirmAddApplication () {
-        this.$refs['form'].validate((valid) => {
-          if (valid) {
-            req.postRequest('/application/addApp',
-              {
-                images: this.form.images,
-                appType: this.form.appType,
-                description:this.form.description
-              }).then(res => {
-              let message = res.data.result
-              let type = 'success'
-              if(!res.data.success) {
-                message=res.data.errorMsg
-                type = 'error'
-              }
-              this.$message({
-                message,
-                type
-              });
-              if (res.data.success) {
-                this.getData()
-                this.closeModal()
-              }
-            })
-          } else {
-            return false;
+        let data = new FormData()
+        console.log(this.form);
+        for (const key in this.form) {
+          if (this.form.hasOwnProperty(key)) {
+            const element = this.form[key];
+
+            if(key == 'images')
+              element.forEach(item => {
+                data.append(key,item)
+              })
+            else
+              data.append(key,element)
           }
-        });
+        }
+
+        req.postRequest('/application/addApp',data).then(res => {
+          console.log(res);
+
+          this.$message('添加成功！');
+        }).finally(() => {
+          this.dialogFormVisible = false
+
+          this.getData()
+        })
 
       },
       closeModal () {

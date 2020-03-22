@@ -70,42 +70,54 @@
 
     <el-dialog title="添加产品" :visible.sync="dialogFormVisible">
       <el-form :model="proform" label-width="120px">
-        <el-form-item label="产品图片" >
-          <el-upload
-            action=""
-            :on-change="handOnchange"
-            multiple
-            :show-file-list="false"
-            :auto-upload="false">
-            <el-button size="small" type="primary">点击上传</el-button>
-          </el-upload>
-        </el-form-item>
+        <el-row>
+          <el-col :span="8">
+            <el-form-item label="产品图片" >
+              <el-upload
+                action=""
+                :on-change="handOnchange"
+                multiple
+                :show-file-list="false"
+                :auto-upload="false">
+                <el-button size="small" type="primary">选择图片（可多选）</el-button>
+              </el-upload>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="产品code码" >
+              <el-select v-model="proform.productTypeCodes" clearable>
+                <el-option :value="type.typeCode" v-for="type in productTypes" :key="type">
+                  {{type.typeEn}}
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item label="产品中文名" >
-          <el-input v-model="proform.cnName" placeholder="请输入内容"></el-input>
+          <el-input v-model="proform.cnName" placeholder="请输入中文名"></el-input>
         </el-form-item>
         <el-form-item label="	产品英文名" >
-          <el-input v-model="proform.enName" placeholder="请输入内容"></el-input>
+          <el-input v-model="proform.enName" placeholder="请输入英文名"></el-input>
         </el-form-item>
-        <el-form-item label="	产品描述" >
-          <el-input v-model="proform.description" placeholder="请输入内容"></el-input>
-        </el-form-item>
-        <el-form-item label="产品code码" >
-          <el-input v-model="proform.productTypeCodes" placeholder="请输入内容"></el-input>
-        </el-form-item>
+
         <el-form-item label="	产品型号" >
-          <el-input v-model="proform.model" placeholder="请输入内容"></el-input>
+          <el-input v-model="proform.model" placeholder="请输入型号"></el-input>
         </el-form-item>
         <el-form-item label="产品尺寸" >
-          <el-input v-model="proform.size" placeholder="请输入内容"></el-input>
+          <el-input v-model="proform.size" placeholder="请输入尺寸"></el-input>
         </el-form-item>
         <el-form-item label="应用领域" >
-          <el-input v-model="proform.application" placeholder="请输入内容"></el-input>
+          <el-input v-model="proform.application" placeholder="请输入应用领域"></el-input>
         </el-form-item>
         <el-form-item label="芯片类型" >
-          <el-input v-model="proform.chipType" placeholder="请输入内容"></el-input>
+          <el-input v-model="proform.chipType" placeholder="请输入芯片类型"></el-input>
         </el-form-item>
         <el-form-item label="读距范围" >
-          <el-input v-model="proform.readingRange" placeholder="请输入内容"></el-input>
+          <el-input v-model="proform.readingRange" placeholder="请输入读距范围"></el-input>
+        </el-form-item>
+
+        <el-form-item label="	产品描述" >
+          <el-input type="textarea" :autosize="{ minRows: 8, maxRows: 50}" v-model="proform.description" placeholder="请输入产品描述信息"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -124,20 +136,20 @@ import * as req from '@/utils/api'
     name: "ProductMan",
     data () {
       return {
+        typeList: [],
         dialogFormVisible: false,
         proform: {
           images: [],
-          cnName: '1',
-          enName: '1',
-          description: '1',
-          productTypeCodes: '1',
-          model: '1',
-          size: '1',
-          application: '1',
-          chipType: '1',
-          readingRange: '1',
+          cnName: '',
+          enName: '',
+          description: '',
+          productTypeCodes: '',
+          model: '',
+          size: '',
+          application: '',
+          chipType: '',
+          readingRange: '',
         },
-
 
         tableColumns: [
           {
