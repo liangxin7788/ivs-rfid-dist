@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section style="font-size: 18px;font-weight: 700">应用领域管理</section>
+<!--    <section style="font-size: 18px;font-weight: 700">应用领域管理</section>-->
     <el-row :gutter="24" >
       <el-col :span="20" style="display: flex;justify-content: flex-end">
         <el-input
@@ -48,8 +48,13 @@
       fit>
       <el-table-column
         fixed
-        prop="images"
-        label="图片">
+        label="图片"
+        width="180">
+        <template slot-scope="scope">
+          <el-image :src="scope.row.images.split(',')[0]"
+                    style="width: auto; height: auto">
+          </el-image>
+        </template>
       </el-table-column>
       <el-table-column
         fixed

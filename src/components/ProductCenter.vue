@@ -129,7 +129,7 @@
         },
 
         dialog: {
-          title: "提示",
+          // title: "提示",
           imgUrl: ""
         },
         dialogVisible: false
@@ -235,8 +235,8 @@
        */
       imgClick(row) {
 
-        this.dialog.imgUrl = row.images
-        this.dialog.title = row.cnName
+        this.dialog.imgUrl = row.images.split(',')[0]
+        // this.dialog.title = row.cnName
         this.dialogVisible = true
       },
 
