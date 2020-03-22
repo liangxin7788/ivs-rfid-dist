@@ -29,15 +29,6 @@
       </el-col>
     </el-row>
 
-
-    <!--添加产品-->
-    <el-dialog
-      title="添加产品"
-      :visible="dialogFormVisible"
-      @close="dialogFormVisible = false">
-      123456
-    </el-dialog>
-
 <!--表格-->
     <el-table
       :data="tableData"
@@ -74,6 +65,55 @@
       @current-change="changePage"
     >
     </el-pagination>
+
+    <!--添加产品-->
+
+    <el-dialog title="添加产品" :visible.sync="dialogFormVisible">
+      <el-form :model="proform" label-width="120px">
+        <el-form-item label="产品图片" >
+          <el-upload
+            action=""
+            :on-change="handOnchange"
+            multiple
+            :show-file-list="false"
+            :auto-upload="false">
+            <el-button size="small" type="primary">点击上传</el-button>
+          </el-upload>
+        </el-form-item>
+        <el-form-item label="产品中文名" >
+          <el-input v-model="proform.cnName" placeholder="请输入内容"></el-input>
+        </el-form-item>
+        <el-form-item label="	产品英文名" >
+          <el-input v-model="proform.enName" placeholder="请输入内容"></el-input>
+        </el-form-item>
+        <el-form-item label="	产品描述" >
+          <el-input v-model="proform.description" placeholder="请输入内容"></el-input>
+        </el-form-item>
+        <el-form-item label="产品code码" >
+          <el-input v-model="proform.productTypeCodes" placeholder="请输入内容"></el-input>
+        </el-form-item>
+        <el-form-item label="	产品型号" >
+          <el-input v-model="proform.model" placeholder="请输入内容"></el-input>
+        </el-form-item>
+        <el-form-item label="产品尺寸" >
+          <el-input v-model="proform.size" placeholder="请输入内容"></el-input>
+        </el-form-item>
+        <el-form-item label="应用领域" >
+          <el-input v-model="proform.application" placeholder="请输入内容"></el-input>
+        </el-form-item>
+        <el-form-item label="芯片类型" >
+          <el-input v-model="proform.chipType" placeholder="请输入内容"></el-input>
+        </el-form-item>
+        <el-form-item label="读距范围" >
+          <el-input v-model="proform.readingRange" placeholder="请输入内容"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="proCommit">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 
 </template>
@@ -85,6 +125,20 @@ import * as req from '@/utils/api'
     data () {
       return {
         dialogFormVisible: false,
+        proform: {
+          images: [],
+          cnName: '1',
+          enName: '1',
+          description: '1',
+          productTypeCodes: '1',
+          model: '1',
+          size: '1',
+          application: '1',
+          chipType: '1',
+          readingRange: '1',
+        },
+
+
         tableColumns: [
           {
             prop: 'enName',
@@ -122,6 +176,39 @@ import * as req from '@/utils/api'
       this.getTypes()
     },
     methods: {
+      handOnchange(file, fileList) {    
+        this.proform.images = fileList.map(item => item.raw)
+      },
+      proCommit() {
+        let data = new FormData()
+
+        console.log(this.proform);
+        
+        for (const key in this.proform) {
+          if (this.proform.hasOwnProperty(key)) {
+            const element = this.proform[key];
+
+            if(key == 'images')
+              element.forEach(item => {
+                data.append(key,item)
+              })
+            else 
+              data.append(key,element)
+          }
+        }
+
+        req.postRequest('/productInfo/addProduct',data).then(res => {
+          console.log(res);
+          
+          this.$message('添加成功！');
+        }).finally(() => {
+          this.dialogFormVisible = false
+
+          this.getProducts()
+        })
+
+      },
+
       doAdd () {
 
       },
