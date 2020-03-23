@@ -1,13 +1,20 @@
 <template>
-  <div>
+  <div style="font-size: 30px">
+    <el-row :gutter="20">
+      <el-col :span="6"  :offset="6"><div class="grid-content bg-purple">
+        <div style="line-height: 30px; text-align: left"  v-for="(applicationName, index) in applicationNames" :key="index">
+          <el-button
+            type="text"
+            @click="getAppDetail(applicationName)">
+            <span style="font-size: 20px">{{applicationName}}</span>
+          </el-button>
+        </div>
+      </div></el-col>
 
-    <div style="line-height: 30px; text-align: left"  v-for="(applicationName, index) in applicationNames" :key="index">
-      <el-button
-        type="text"
-        @click="getAppDetail(applicationName)">
-      <span>{{applicationName}}</span>
-      </el-button>
-    </div>
+      <el-col :span="6"><div class="grid-content bg-purple">
+        {{description}}
+      </div></el-col>
+    </el-row>
 
     <div class="imageClass">
       <el-carousel :interval="5000" arrow="always">
@@ -36,7 +43,8 @@
           //   {url:require('../assets/tyre.jpg')}
           // ],
           imgList:[],
-          title: undefined
+          title: undefined,
+          description: undefined
         }
       },
       mounted () {
@@ -51,6 +59,7 @@
           req.getRequest('/application/getAppList',{appType: data}).then(res => {
             this.applicationDetail = res.data.result || undefined
             this.imgList = this.applicationDetail.images.split(',') || undefined
+            this.description = this.applicationDetail.description || undefined
           }).catch(e => {
             console.log(e);
           })
