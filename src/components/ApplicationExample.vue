@@ -9,7 +9,7 @@
       </el-button>
     </div>
 
-    <div>
+    <div class="imageClass">
       <el-carousel :interval="5000" arrow="always">
         <el-carousel-item v-for="(img,index) in imgList" :key="index">
           <img :src="img" style="width: auto; height: auto">
@@ -74,5 +74,8 @@
 
   .el-carousel__item:nth-child(2n+1) {
     background-color: #d3dce6;
+  }
+  .imageClass{
+    margin: 15% 0 5px 0;
   }
 </style>
