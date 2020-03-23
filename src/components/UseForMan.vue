@@ -33,7 +33,7 @@
             action=""
             :on-change="handOnchange"
             multiple
-            :show-file-list="false"
+            :show-file-list="true"
             :auto-upload="false">
             <el-button size="small" type="primary">选择图片（可多选）</el-button>
           </el-upload>

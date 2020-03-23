@@ -77,7 +77,7 @@
                 action=""
                 :on-change="handOnchange"
                 multiple
-                :show-file-list="false"
+                :show-file-list="true"
                 :auto-upload="false">
                 <el-button size="small" type="primary">选择图片（可多选）</el-button>
               </el-upload>
@@ -188,14 +188,14 @@ import * as req from '@/utils/api'
       this.getTypes()
     },
     methods: {
-      handOnchange(file, fileList) {    
+      handOnchange(file, fileList) {
         this.proform.images = fileList.map(item => item.raw)
       },
       proCommit() {
         let data = new FormData()
 
         console.log(this.proform);
-        
+
         for (const key in this.proform) {
           if (this.proform.hasOwnProperty(key)) {
             const element = this.proform[key];
@@ -204,14 +204,14 @@ import * as req from '@/utils/api'
               element.forEach(item => {
                 data.append(key,item)
               })
-            else 
+            else
               data.append(key,element)
           }
         }
 
         req.postRequest('/productInfo/addProduct',data).then(res => {
           console.log(res);
-          
+
           this.$message('添加成功！');
         }).finally(() => {
           this.dialogFormVisible = false

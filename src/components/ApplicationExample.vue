@@ -1,9 +1,18 @@
 <template>
   <div>
+
+    <div style="line-height: 30px; text-align: left"  v-for="(applicationName, index) in applicationNames" :key="index">
+      <el-button
+        type="text"
+        @click="getAppDetail(applicationName)">
+      <span>{{applicationName}}</span>
+      </el-button>
+    </div>
+
     <div>
       <el-carousel :interval="5000" arrow="always">
         <el-carousel-item v-for="(img,index) in imgList" :key="index">
-          <img :src="img.url">
+          <img :src="img" style="width: auto; height: auto">
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -18,22 +27,34 @@
       },
       data () {
         return {
-          imgList:[
-            {url:require('../assets/ring.png')},
-            {url:require('../assets/book.jpg')},
-            {url:require('../assets/clothes.jpg')},
-            {url:require('../assets/tyre.jpg')}
-
-          ],
+          applicationDetail: [],
+          applicationNames: [],
+          // imgList:[
+          //   {url:require('../assets/ring.png')},
+          //   {url:require('../assets/book.jpg')},
+          //   {url:require('../assets/clothes.jpg')},
+          //   {url:require('../assets/tyre.jpg')}
+          // ],
+          imgList:[],
           title: undefined
         }
       },
       mounted () {
-        req.getRequest('/applicationExample/getTitle',{}).then(res => {
-          this.title = res.data.result || undefined
+        req.getRequest('/application/getAppNames',{}).then(res => {
+          this.applicationNames = res.data.result || undefined
         }).catch(e => {
           console.log(e);
         })
+      },
+      methods: {
+        getAppDetail (data) {
+          req.getRequest('/application/getAppList',{appType: data}).then(res => {
+            this.applicationDetail = res.data.result || undefined
+            this.imgList = this.applicationDetail.images.split(',') || undefined
+          }).catch(e => {
+            console.log(e);
+          })
+        }
       }
     }
 </script>
