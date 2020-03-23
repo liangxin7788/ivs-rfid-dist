@@ -23,7 +23,7 @@
       </el-col>
     </el-row>
 
-    <el-dialog title="添加应用" :visible.sync="dialogFormVisible" width="400px" center>
+    <el-dialog title="添加应用" :visible.sync="dialogFormVisible" width="600px" center>
       <el-form ref="form" :model="form">
 <!--        <el-form-item label="图片" label-width="80px" prop="images">-->
 <!--          <el-input v-model="form.images" autocomplete="off"></el-input>-->
@@ -42,7 +42,7 @@
           <el-input v-model="form.appType" autocomplete="off" ></el-input>
         </el-form-item>
         <el-form-item label="应用描述" label-width="80px" prop="description">
-          <el-input v-model="form.description" autocomplete="off" ></el-input>
+          <el-input type="textarea" :autosize="{ minRows: 8, maxRows: 50}" v-model="form.description" autocomplete="off" ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer">
