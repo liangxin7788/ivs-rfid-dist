@@ -3,7 +3,7 @@
 
     <el-form class="contentForm" inline label-width="100px" label-position="right">
       <el-form-item label="product name">
-        <el-input v-model="productTitle" placeholder="输入productTitle"></el-input>
+        <el-input v-model="productTitle" placeholder="enter name"></el-input>
       </el-form-item>
 
       <el-form-item label="tag type">
@@ -47,7 +47,7 @@
       </el-table-column>
       <el-table-column
         prop="size"
-        label="Size">
+        label="Dimension">
       </el-table-column>
       <el-table-column
         prop="chipType"
@@ -92,9 +92,7 @@
           Loading...<span class="dot">...</span>
         </div>
       </el-image>
-
     </el-dialog>
-
   </div>
 </template>
 

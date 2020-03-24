@@ -3,9 +3,10 @@
     <!-- 头部-->
     <el-header>
       <el-row :gutter="20">
-        <el-col :span="20">
+        <el-col :span="20" :offset="6">
           <el-menu :default-active="defaultActive" class="el-menu-header" mode="horizontal"
                    @select="handleSelect" >
+            <el-menu-item><img src="http://liangxin.fun/logo.jpg" style="width: 100px; height: 40px"></el-menu-item>
             <el-menu-item index="/index">About Us</el-menu-item>
             <el-submenu index="/productCenter">
               <template slot="title">Product Center</template>
@@ -14,15 +15,17 @@
             </el-submenu>
             <el-menu-item index="/applicationExample">Application Example</el-menu-item>
             <el-menu-item index="/contactUs">Contact Us</el-menu-item>
-            <el-menu-item index="/admin" v-show="isAdmin">管理中心</el-menu-item>
+            <el-menu-item index="/admin" v-show="isAdmin">Manager Center</el-menu-item>
+            <el-menu-item>
+              <div :span="4" style="height: 60px;line-height: 60px;border-bottom: 1px solid #eee">
+                <el-button type="primary" @click="signInDialog" v-show="!isAdmin">Sign In</el-button>
+                <el-button type="danger" plain  @click="logout" v-show="isAdmin">
+                  <i class="el-icon-switch-button" color="red"></i>
+                  logout</el-button>
+              </div>
+            </el-menu-item>
           </el-menu>
         </el-col>
-        <div :span="4" style="height: 60px;line-height: 60px;border-bottom: 1px solid #eee">
-          <el-button type="primary" @click="signInDialog" v-show="!isAdmin">Sign In</el-button>
-          <el-button type="danger" plain  @click="logout" v-show="isAdmin">
-            <i class="el-icon-switch-button" color="red"></i>
-            logout</el-button>
-        </div>
       </el-row>
     </el-header>
 
@@ -61,8 +64,6 @@
     </div>
 
   </el-container>
-
-
 </template>
 
 <script>
@@ -192,7 +193,6 @@
 </script>
 
 <style scoped>
-
   .myFooter {
     background-color: #303848;
     color: rgb(222, 222, 222);
