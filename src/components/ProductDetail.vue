@@ -9,44 +9,32 @@
         <div class="grid-content bg-purple">
           <img :src="bigImg || images[0]" style="width: 100%; height: 100%">
         </div>
+        <br>
+        <br>
+        <br>
         <div>
           <img v-for="item in images"  :src="item" @click="bigImg = item">
         </div>
       </el-col>
 
-      <el-col :span="6" :offset="1">
+      <el-col :span="8" :offset="1">
         <div class="grid-content bg-purple">
           {{productDetailObj.description}}
         </div>
       </el-col>
     </el-row>
 
-    <el-row :gutter="20">
-      <el-col :span="16"><div class="grid-content bg-purple">
+    <el-row :gutter="24">
+      <el-col :span="16" offset="4"><div class="relatedCss">
         <span style="font-size: 20px">Related Tags</span>
       </div></el-col>
     </el-row>
 
-<!--    <el-container>-->
-<!--      <el-aside width="30%" class="aside">-->
-<!--        <el-image :src="productDetailObj.images">-->
-<!--          <div slot="placeholder" class="image-slot">-->
-<!--            Loading...<span class="dot">...</span>-->
-<!--          </div>-->
-<!--        </el-image>-->
-<!--      </el-aside>-->
-<!--      <el-main >-->
-<!--        <el-form  label-width="100px" size="medium" label-position="left" class="form">-->
-<!--          <el-form-item  label="cnName :">{{productDetailObj.cnName}}</el-form-item>-->
-<!--          <el-form-item  label="enName :">{{productDetailObj.enName}}</el-form-item>-->
-<!--          <el-form-item  label="application :">{{productDetailObj.application}}</el-form-item>-->
-<!--          <el-form-item  label="size :">{{productDetailObj.size}}</el-form-item>-->
-<!--          <el-form-item  label="model :">{{productDetailObj.model}}</el-form-item>-->
-<!--          <el-form-item  label="chipType :">{{productDetailObj.chipType}}</el-form-item>-->
-<!--          <el-form-item  label="description :">{{productDetailObj.description}}</el-form-item>-->
-<!--        </el-form>-->
-<!--      </el-main>-->
-<!--    </el-container>-->
+    <el-row :gutter="24">
+      <el-col :span="6" offset="6"><div class="grid-content bg-purple">
+        <img v-for="item in productSimilars" :src="item.imageUrl" @click="getProductDetail(item.id)" style="width: 40%; height: 50%">
+      </div></el-col>
+    </el-row>
   </div>
 </template>
 
@@ -58,17 +46,18 @@
       return {
         productDetailObj: {},
         bigImg: '',
+        productSimilars: [],
         images: []
       }
     },
     methods: {
       getProductDetail(id) {
-        req.getRequest("/productInfo/getProductDetail",
-          {productId: id}
+        req.getRequest("/productInfo/getProductDetail", {productId: id}
         ).then(res => {
           let data = res.data.result
           this.productDetailObj = data
           this.images = data.images.split(',')
+          this.productSimilars = data.productSimilars
           console.log(data);
         }).catch(err => {
           console.log(err);
@@ -98,6 +87,11 @@
     justify-content: center;
     align-items: center;
   }
-
-
+  /*.relatedCss {*/
+  /*  border-radius: 4px;*/
+  /*  min-height: 36px;*/
+  /*}*/
+  .relatedCss {
+    background: #99a9bf;
+  }
 </style>

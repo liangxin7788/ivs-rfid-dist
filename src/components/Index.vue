@@ -7,6 +7,7 @@
           <el-menu :default-active="defaultActive" class="el-menu-header" mode="horizontal"
                    @select="handleSelect" >
             <el-menu-item><img src="http://liangxin.fun/logo.jpg" style="width: 100px; height: 40px"></el-menu-item>
+<!--            <img src="http://liangxin.fun/logo.jpg" style="width: 100px; height: 40px">-->
             <el-menu-item index="/index">About Us</el-menu-item>
             <el-submenu index="/productCenter">
               <template slot="title">Product Center</template>
