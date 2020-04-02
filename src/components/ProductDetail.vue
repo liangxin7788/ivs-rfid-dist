@@ -18,10 +18,16 @@
       </el-col>
 
       <el-col :span="8" :offset="1">
-        <div class="grid-content bg-purple">
+        <div class="descriptionCss">
           {{productDetailObj.description}}
         </div>
       </el-col>
+    </el-row>
+
+
+    <el-row :gutter="24">
+      <el-col :span="6" offset="6"><div class="grid-content bg-purple">
+      </div></el-col>
     </el-row>
 
     <el-row :gutter="24">
@@ -32,7 +38,7 @@
 
     <el-row :gutter="24">
       <el-col :span="6" offset="6"><div class="grid-content bg-purple">
-        <img v-for="item in productSimilars" :src="item.imageUrl" @click="getProductDetail(item.id)" style="width: 40%; height: 50%">
+        <img v-for="item in productSimilars" :src="item.imageUrl" @click="getProductDetail(item.productId)" style="width: 40%; height: 50%">
       </div></el-col>
     </el-row>
   </div>
@@ -52,11 +58,12 @@
     },
     methods: {
       getProductDetail(id) {
+        console.log(this.productSimilars,id)
         req.getRequest("/productInfo/getProductDetail", {productId: id}
         ).then(res => {
           let data = res.data.result
           this.productDetailObj = data
-          this.images = data.images.split(',')
+          this.images = data.images && data.images.split(',') || []
           this.productSimilars = data.productSimilars
           console.log(data);
         }).catch(err => {
@@ -93,5 +100,9 @@
   /*}*/
   .relatedCss {
     background: #99a9bf;
+  }
+
+  .descriptionCss {
+    float: left;
   }
 </style>
