@@ -5,7 +5,7 @@
     </div>
 
     <el-row :gutter="20">
-      <el-col :span="6" :offset="6">
+      <el-col :span="6" :offset=6>
         <div class="grid-content bg-purple">
           <img :src="bigImg || images[0]" style="width: 100%; height: 100%">
         </div>
@@ -17,7 +17,7 @@
         </div>
       </el-col>
 
-      <el-col :span="8" :offset="1">
+      <el-col :span="8" :offset=1>
         <div class="descriptionCss">
           {{productDetailObj.description}}
         </div>
@@ -26,20 +26,23 @@
 
 
     <el-row :gutter="24">
-      <el-col :span="6" offset="6"><div class="grid-content bg-purple">
+      <el-col :span="6" offset=6><div class="grid-content bg-purple">
       </div></el-col>
     </el-row>
 
     <el-row :gutter="24">
-      <el-col :span="16" offset="4"><div class="relatedCss">
+      <el-col :span="16" offset=4><div class="relatedCss">
         <span style="font-size: 20px">Related Tags</span>
       </div></el-col>
     </el-row>
 
     <el-row :gutter="24">
-      <el-col :span="6" offset="6"><div class="grid-content bg-purple">
-        <img v-for="item in productSimilars" :src="item.imageUrl" @click="getProductDetail(item.productId)" style="width: 40%; height: 50%">
-      </div></el-col>
+      <el-col :span="10" offset=6>
+        <div v-for="item in productSimilars">
+          <img :src="item.imageUrl" @click="getProductDetail(item.productId)" style="width: 40%; height: 50%">
+          <span>{{item.title}}</span>
+        </div>
+      </el-col>
     </el-row>
   </div>
 </template>

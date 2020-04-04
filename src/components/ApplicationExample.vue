@@ -58,6 +58,7 @@
       mounted () {
         req.getRequest('/application/getAppNames',{}).then(res => {
           this.applicationNames = res.data.result || undefined
+          this.getAppDetail(res.data.result[0])
         }).catch(e => {
           console.log(e);
         })

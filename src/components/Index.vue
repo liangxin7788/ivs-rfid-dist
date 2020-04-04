@@ -6,17 +6,17 @@
         <el-col :span="20" :offset="6">
           <el-menu :default-active="defaultActive" class="el-menu-header" mode="horizontal"
                    @select="handleSelect" >
-            <el-menu-item><img src="http://liangxin.fun/logo.jpg" style="width: 100px; height: 40px"></el-menu-item>
+            <el-menu-item index="0"><img src="http://liangxin.fun/logo.jpg" style="width: 100px; height: 40px"></el-menu-item>
             <el-menu-item index="/index">About Us</el-menu-item>
             <el-submenu index="/productCenter">
               <template slot="title">Product Center</template>
-              <el-menu-item :index="JSON.stringify(type.id)" v-for="(type, index) in typeList" :key="index">{{type.typeEn}}
+              <el-menu-item  :index="JSON.stringify(type)" v-for="(type, index) in typeList" :key="index">{{type.typeEn}}
               </el-menu-item>
             </el-submenu>
             <el-menu-item index="/applicationExample">Application Example</el-menu-item>
             <el-menu-item index="/contactUs">Contact Us</el-menu-item>
             <el-menu-item index="/admin" v-show="isAdmin">Manager Center</el-menu-item>
-            <el-menu-item>
+            <el-menu-item index="1">
               <div :span="4" style="height: 60px;line-height: 60px;border-bottom: 1px solid #eee">
                 <el-button type="primary" @click="signInDialog" v-show="!isAdmin">Sign In</el-button>
                 <el-button type="danger" plain  @click="logout" v-show="isAdmin">
@@ -97,7 +97,7 @@
     },
     mounted() {
       this.isAdmin = !!utils.getCookie('username')
-      this.defaultActive = this.$route.path
+      this.defaultActive = this.$route.path == '/productCenter' ? 10 : this.$route.path
       // console.log(this.$route.path)
       req.getRequest('/productType/getTypeList', {}).then(res => {
         this.typeList = res.data.result || []
@@ -173,7 +173,7 @@
 
             }
 
-        }).catch(err=>{
+          }).catch(err=>{
 
           console.log(err);
         })
@@ -218,8 +218,8 @@
   .el-container:nth-child(7) .el-aside {
     line-height: 320px;
   }
-.loginBtn{
-  width: 50%;
-}
+  .loginBtn{
+    width: 50%;
+  }
 
 </style>
