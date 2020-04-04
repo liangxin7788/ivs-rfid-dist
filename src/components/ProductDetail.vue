@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="bar">
-      <el-button @click="backPerv" icon="el-icon-arrow-left" round>return</el-button>
+      <el-button @click="backPerv" icon="el-icon-arrow-left" round>Back</el-button>
     </div>
 
     <el-row :gutter="20">

@@ -1,39 +1,33 @@
 <template>
-  <el-row>
-    <el-col :span="6">
-      <dl>
-        <dt>company info</dt>
-        <dd><a @click="linkTo('aboutUs')">aboutUs</a></dd>
-        <dd><a href="linkTo('connectUs')">connect us</a></dd>
-      </dl>
-    </el-col>
+  <div>
+    <el-row :gutter="24" style="margin-top: 10px; font-size: 18px">
+      <el-col :span="2" offset="7">
+        <span>Home</span>
+      </el-col>
 
-    <el-col :span="6">
-      <dl>
-        <dt>partner</dt>
-        <dd><a href="https://www.baidu.com">项目推广扶持</a></dd>
-      </dl>
-    </el-col>
+      <el-col :span="2">
+        <span>About us</span>
+      </el-col>
 
-    <el-col :span="6">
-      <dl>
-        <dt>support</dt>
-        <dd><a href="https://www.baidu.com">服务支持</a></dd>
-        <dd><a href="https://www.baidu.com">问题解答</a></dd>
-      </dl>
-    </el-col>
-    <el-col :span="6">
-      <dl>
-        <dt>关注我们</dt>
-        <dd>
-          <div class="wx_ewm">
-            <img src="../assets/weixin.jpg" width="100" height="100">
-          </div>
-        </dd>
-      </dl>
-    </el-col>
-  </el-row>
+      <el-col :span="2">
+        <span>Product</span>
+      </el-col>
 
+      <el-col :span="2">
+        <span>Solution</span>
+      </el-col>
+
+      <el-col :span="2">
+        <span>Contact us</span>
+      </el-col>
+    </el-row>
+
+    <el-row style="margin-top: 100px; font-size: 18px">
+      <el-col :span="12" offset="6">
+        <span>@ Shenzhen IWINS Technologies Co., Ltd All rights reserved</span>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>

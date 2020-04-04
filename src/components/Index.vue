@@ -3,17 +3,19 @@
     <!-- 头部-->
     <el-header>
       <el-row :gutter="20">
-        <el-col :span="20" :offset="6">
+        <el-col :span="20" :offset=6>
           <el-menu :default-active="defaultActive" class="el-menu-header" mode="horizontal"
                    @select="handleSelect" >
             <el-menu-item index="0"><img src="http://liangxin.fun/logo.jpg" style="width: 100px; height: 40px"></el-menu-item>
+            <el-menu-item index="/home">Home</el-menu-item>
             <el-menu-item index="/index">About Us</el-menu-item>
             <el-submenu index="/productCenter">
-              <template slot="title">Product Center</template>
-              <el-menu-item  :index="JSON.stringify(type)" v-for="(type, index) in typeList" :key="index">{{type.typeEn}}
+              <template slot="title">Product</template>
+              <el-menu-item  :index="JSON.stringify(type)" v-for="(type, index) in typeList" :key="index">
+                {{type.typeEn}}
               </el-menu-item>
             </el-submenu>
-            <el-menu-item index="/applicationExample">Application Example</el-menu-item>
+            <el-menu-item index="/applicationExample">Solution</el-menu-item>
             <el-menu-item index="/contactUs">Contact Us</el-menu-item>
             <el-menu-item index="/admin" v-show="isAdmin">Manager Center</el-menu-item>
             <el-menu-item index="1">
@@ -59,7 +61,6 @@
 
         <el-button class="loginBtn" type="primary" round @click="signIn">登 录</el-button>
 
-
       </el-dialog>
     </div>
 
@@ -78,7 +79,7 @@
     data() {
       return {
         isAdmin: false,
-        defaultActive: '/index',
+        defaultActive: '/home',
         typeList: [],
         dialogVisible: false,
         form:{
@@ -119,7 +120,6 @@
               tag: JSON.parse(key).typeCode
             }
           })
-
       },
       // linkTo(path) {
       //   this.$router.push({name: path})

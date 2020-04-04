@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Home from '@/components/Home'
 import AboutUs from '@/components/AboutUs'
 import ProductCenter from '@/components/ProductCenter'
 import ApplicationExample from '@/components/ApplicationExample'
@@ -18,6 +19,11 @@ export default new Router({
       path: '/',
       redirect: '/index',
 
+    },
+    {
+      path: '/home',
+      name: 'home',
+      component: Home
     },
     {
       path: '/index',
@@ -67,6 +73,7 @@ export default new Router({
     },
     {
       path: "/productDetail",
+      name: "/productDetail",
       component: ProductDetail
     }
   ]
