@@ -11,29 +11,44 @@
     <br>
     <br>
     <div class="con">
-      <div class="a">
+      <div class="a" style="margin-top: 80px; font-size: 18px">
         <div v-for="item in introduction.split('\n')">{{item}}</div>
       </div>
       <div class="b">
         <el-form label-width="80px">
-          <div class="c">
-              <el-input type="input" v-model="name" placeholder="Your Name(required)" size="medium"></el-input>
-              <el-input type="input" v-model="customerEmail" placeholder="E-mail(required)" size="medium"></el-input>
-            <el-input type="input" v-model="comeFrom" placeholder="Country(required)" size="medium"></el-input>
-          </div><br>
-          <div class="c">
-              <el-input type="input" v-model="address" placeholder="Address(un-required)" size="medium"></el-input>
-              <el-input type="input" v-model="company" placeholder="Company(un-required)" size="medium"></el-input>
-              <el-input type="input" v-model="phoneNumber" placeholder="Phone(un-required)" size="medium"></el-input>
-          </div>
-          <el-form-item label="Massage:">
-            <el-input type="textarea" :autosize="{ minRows: 8, maxRows: 50}" v-model="massage" style="margin: 50px 0 0  0; width: 500px; text-align: left"></el-input>
-          </el-form-item>
+          <i class="el-icon-star-on"></i>Titel: <el-input type="input" v-model="titel" size="medium"></el-input>
+          <i class="el-icon-star-on"></i>Name: <el-input type="input" v-model="name" size="medium"></el-input>
+          <i class="el-icon-star-on"></i>E-mail: <el-input type="input" v-model="customerEmail" size="medium"></el-input>
+          <i class="el-icon-star-on"></i>Country: <el-input type="input" v-model="comeFrom" size="medium"></el-input>
+          Address: <el-input type="input" v-model="address" size="medium"></el-input>
+          Company: <el-input type="input" v-model="company" size="medium"></el-input>
+          Tel: <el-input type="input" v-model="phoneNumber" size="medium"></el-input>
+          <i class="el-icon-star-on"></i>Content: <br><el-input type="textarea" :autosize="{ minRows: 8, maxRows: 50}" v-model="massage" style="margin: 10px 0 0  0; width: 750px; text-align: left"></el-input>
           <el-form-item style="text-align: center">
             <el-button type="primary" @click="onSubmit">Submit</el-button>
             <el-button @click="resetForm">Cancel</el-button>
           </el-form-item>
         </el-form>
+
+<!--        <el-form label-width="80px">-->
+<!--          <div class="c">-->
+<!--            <el-input type="input" v-model="name" placeholder="Your Name(required)" size="medium"></el-input>-->
+<!--            <el-input type="input" v-model="customerEmail" placeholder="E-mail(required)" size="medium"></el-input>-->
+<!--            <el-input type="input" v-model="comeFrom" placeholder="Country(required)" size="medium"></el-input>-->
+<!--          </div><br>-->
+<!--          <div class="c">-->
+<!--            <el-input type="input" v-model="address" placeholder="Address(un-required)" size="medium"></el-input>-->
+<!--            <el-input type="input" v-model="company" placeholder="Company(un-required)" size="medium"></el-input>-->
+<!--            <el-input type="input" v-model="phoneNumber" placeholder="Phone(un-required)" size="medium"></el-input>-->
+<!--          </div>-->
+<!--          <el-form-item label="Massage:">-->
+<!--            <el-input type="textarea" :autosize="{ minRows: 8, maxRows: 50}" v-model="massage" style="margin: 50px 0 0  0; width: 500px; text-align: left"></el-input>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item style="text-align: center">-->
+<!--            <el-button type="primary" @click="onSubmit">Submit</el-button>-->
+<!--            <el-button @click="resetForm">Cancel</el-button>-->
+<!--          </el-form-item>-->
+<!--        </el-form>-->
       </div>
     </div>
   </div>
@@ -50,6 +65,7 @@
             {url:require('../assets/Long-image-4.jpg')}
           ],
           introduction: '',
+          titel: '',
           name: '',
           customerEmail: '',
           phoneNumber: '',
@@ -60,15 +76,15 @@
         }
       },
       mounted() {
-        this.introduction = 'Company: SZ IVS Technologies CO.,LTD.\n' +
-          'Address: 深圳市龙岗区平湖街道新木社区新木路321-3号新木半里大厦C座1413\n' +
-          'Tel: (0755)8888 8888\nFax: (0755)8888 8889\nSkype: ivsrfid\nE-mail: Sharon.loo@outlook.com\n' +
-          'WhatsApp: +86 158 1429 5175'
+        this.introduction = 'Company: Shenzhen IWINS Technology Co., Ltd\nPhone: +86 158 1429 5175\nTel:+86 75521000000\n' +
+          'E-mail:sharon.loo@outlook.com\nSkype: iwinstech\n'+
+          'Address: C1413 Xinmu Banli Building,Xinmu Rd 321-3,Xinmu Community,Pinghu Street,Longgang 518111,Shenzhen\n'
       },
       methods: {
         onSubmit() {
           console.log('submit!');
           req.postRequest('/customerMassage/addMassage',{
+            titel: this.titel || undefined,
             name: this.name || undefined,
             customerEmail: this.customerEmail || undefined,
             massage: this.massage || undefined,
@@ -96,6 +112,7 @@
           this.resetForm()
         },
         resetForm() {
+          this.titel = ''
           this.name = ''
           this.customerEmail = ''
           this.massage = ''
@@ -133,6 +150,7 @@
   .b {
     text-align: left;
     float: right;
+    font-size: 18px;
   }
   .aaa  .el-carousel__container {
     height: 240px;

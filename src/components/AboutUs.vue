@@ -9,14 +9,14 @@
     <el-row>
       <el-col :span="12" :offset=1 style="margin-top: 40px">
         <div class="grid-content bg-purple-dark">
-          <span style="font-size: 24px">Company Profile</span>
+          <span style="font-size: 20px">Company Profile</span>
         </div>
       </el-col>
     </el-row>
 
     <el-row>
       <el-col :span="12" :offset=6 style="margin-top: 20px">
-        <div class="text item" style="line-height: 30px; text-align: left; font-size: 20px">
+        <div class="text item" style="line-height: 30px; text-align: left; font-size: 18px">
           {{companyProfile}}
         </div>
       </el-col>
@@ -25,13 +25,13 @@
     <el-row>
         <el-col :span="11" :offset=1 style="margin-top: 60px">
           <div class="grid-content bg-purple-dark">
-            <span style="font-size: 24px">Advantage</span>
+            <span style="font-size: 20px">Advantage</span>
           </div>
         </el-col>
     </el-row>
     <el-row>
       <el-col :span="12" :offset=6 style="margin-top: 20px">
-        <div class="text item" style="line-height: 30px; text-align: left; font-size: 20px">
+        <div class="text item" style="line-height: 30px; text-align: left; font-size: 18px">
           {{advantage}}
         </div>
       </el-col>
@@ -40,7 +40,7 @@
     <el-row>
       <el-col :span="11" :offset=1 style="margin-top: 40px">
         <div class="grid-content bg-purple-dark">
-          <span style="font-size: 24px">Partner</span>
+          <span style="font-size: 20px">Partner</span>
         </div>
       </el-col>
     </el-row>
