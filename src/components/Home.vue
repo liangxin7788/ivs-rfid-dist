@@ -7,29 +7,38 @@
       :with-header="true">
       <span>{{newsDetail && newsDetail[0] && newsDetail[0].content || ''}}</span>
     </el-drawer>
-    <el-carousel :interval="5000" class="aaa" style="height: 240px; width: 100%">   <!--arrow="never"  设置了该属性就不会自动轮换照片-->
-      <el-carousel-item v-for="(img,index) in imgList" :key="index">
-        <el-image :src="img.url" style="height: auto; width: 100%"></el-image>
-      </el-carousel-item>
-    </el-carousel>
 
-    <el-row style="margin-top: 100px">
+<!--    <el-carousel :interval="5000" class="aaa" style="height: 240px; width: 100%">   &lt;!&ndash;arrow="never"  设置了该属性就不会自动轮换照片&ndash;&gt;-->
+<!--      <el-carousel-item v-for="(img,index) in imgList" :key="index">-->
+<!--        <el-image :src="img.url" style="height: auto; width: 100%"></el-image>-->
+<!--      </el-carousel-item>-->
+<!--    </el-carousel>-->
+
+    <div class="imageClass">
+      <el-carousel :interval="4000" type="card" height="200px">
+        <el-carousel-item v-for="item in imgList" :key="item">
+          <img :src="item" style="width: auto; height: auto">
+        </el-carousel-item>
+      </el-carousel>
+    </div>
+
+    <el-row style="margin-top: 100px; font-size: 20px">
       <el-col :span="7" :offset=3>
         <div class="grid-content bg-purple-dark">
-          <span style="font-size: 24px">Product</span>
-          <el-button type="primary" plain @click="routerToProducts" style="color: blue; font-size: 10px; margin-left: 10px">more...</el-button>
+          <span>Product</span>&nbsp;&nbsp;&nbsp;&nbsp;
+          <el-button type="primary" plain @click="routerToProducts" style="color: blue; font-size: 8px; margin-left: 10px">more...</el-button>
         </div>
       </el-col>
 
-      <el-col :span="6">
+      <el-col :span="4">
         <div class="grid-content bg-purple-dark">
-          <span style="font-size: 24px">News</span>
+          <span>News</span>
         </div>
       </el-col>
 
-      <el-col :span="6">
+      <el-col :span="8">
         <div class="grid-content bg-purple-dark">
-          <span style="font-size: 24px">Contact us</span>
+          <span>Contact us</span>
         </div>
       </el-col>
     </el-row>
@@ -40,8 +49,8 @@
           <el-button
             type="text"
             @click="routerToDetail(product.id)"><i class="el-icon-star-on"></i>
-                <span class="newsCss" style="font-size: 20px; color: black">{{product.enName.slice(0,50)}}</span>
-                <span class="newsCss" style="font-size: 20px ; color: black" v-if="product.enName.length > 50">...</span>
+                <span class="newsCss" style="font-size: 18px; color: black">{{product.enName.slice(0,50)}}</span>
+                <span class="newsCss" style="font-size: 18px ; color: black" v-if="product.enName.length > 50">...</span>
           </el-button>
         </div>
       </el-col>
@@ -54,8 +63,8 @@
             <el-row>
               <el-col span="6">
                 <i class="el-icon-news"></i>
-                <span class="newsCss" style="font-size: 20px; color: black">{{company.title.slice(0,25)}}</span>
-                <span class="newsCss" style="font-size: 20px ; color: black" v-if="company.title.length > 25">...</span>
+                <span class="newsCss" style="font-size: 18px; color: black">{{company.title.slice(0,25)}}</span>
+                <span class="newsCss" style="font-size: 18px ; color: black" v-if="company.title.length > 25">...</span>
               </el-col>
 <!--              <el-col span="6" offset="12">-->
 <!--                <span style="font-size: 20px ; color: black">{{company.createAt.substring(0, 10)}}</span>-->
@@ -65,7 +74,7 @@
         </div>
       </el-col>
 
-      <el-col :span="5" :offset="2">
+      <el-col :span="5" :offset="2" style="font-size: 18px">
         <div style="line-height: 48px; text-align: left; margin-top: 10px">
           <span><i class="el-icon-message"></i> E-Mail: sharon.loo@outlook.com</span><br>
           <span><i class="el-icon-mobile-phone"></i> Phone: +86 158 1429 5175</span><br>
@@ -83,10 +92,7 @@
     name: "Home",
     data(){
       return{
-        imgList:[
-          {url:require('../assets/Long-image-3.jpg')},
-          {url:require('../assets/Long-image-4.jpg')}
-        ],
+        imgList:["http://liangxin.fun/027dea2b69e44eea8294fe55dd41ea54.jpg", "http://liangxin.fun/a90ca363d6774e8ab783b4c866ea3136.jpg", "http://liangxin.fun/d44d4b1652f245cba98865b939815eb7.jpg"],
         title: this.title || undefined,
         content: this.content || undefined,
         createAt: this.createAt || undefined,

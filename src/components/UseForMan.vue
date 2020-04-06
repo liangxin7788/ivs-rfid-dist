@@ -19,16 +19,16 @@
           icon="el-icon-plus"
           type="success"
           @click="dialogFormVisible = true">
-          添加应用</el-button>
+          添加解决方案</el-button>
       </el-col>
     </el-row>
 
-    <el-dialog title="添加应用" :visible.sync="dialogFormVisible" width="600px" center>
+    <el-dialog title="添加解决方案" :visible.sync="dialogFormVisible" width="600px" center>
       <el-form ref="form" :model="form">
 <!--        <el-form-item label="图片" label-width="80px" prop="images">-->
 <!--          <el-input v-model="form.images" autocomplete="off"></el-input>-->
 <!--        </el-form-item>-->
-        <el-form-item label="应用图片样例" >
+        <el-form-item label="解决方案图片样例" >
           <el-upload
             action=""
             :on-change="handOnchange"
@@ -38,10 +38,10 @@
             <el-button size="small" type="primary">选择图片（可多选）</el-button>
           </el-upload>
         </el-form-item>
-        <el-form-item label="应用类型" label-width="80px" prop="appType">
+        <el-form-item label="解决方案主题" label-width="80px" prop="appType">
           <el-input v-model="form.appType" autocomplete="off" ></el-input>
         </el-form-item>
-        <el-form-item label="应用描述" label-width="80px" prop="description">
+        <el-form-item label="解决方案描述" label-width="80px" prop="description">
           <el-input type="textarea" :autosize="{ minRows: 8, maxRows: 50}" v-model="form.description" autocomplete="off" ></el-input>
         </el-form-item>
       </el-form>
@@ -69,12 +69,12 @@
       <el-table-column
         fixed
         prop="appType"
-        label="应用类型">
+        label="解决方案主题">
       </el-table-column>
       <el-table-column
         fixed
         prop="description"
-        label="应用描述">
+        label="解决方案描述">
       </el-table-column>
       <el-table-column
         fixed
@@ -134,13 +134,13 @@
         console.log(data);
       },
       deleteProductType (data) {
-        this.$confirm(`是否确认删除 应用领域 : ${data.typeCn}？`, '警告',{
+        this.$confirm(`是否确认删除 应用领域 : ${data.appType}？`, '警告',{
           center: true,
           confirmButtonText: '确认',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          req.getRequest('/productType/deleteType', {typeId: data.id}).then(res => {
+          req.getRequest('/application/delApp', {appId: data.id}).then(res => {
             let message = res.data.result
             let type = 'success'
             if(!res.data.success) {

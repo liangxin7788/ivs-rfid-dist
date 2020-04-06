@@ -108,7 +108,6 @@
     },
     methods: {
       handleSelect(key, keyPath) {
-        // console.log(key, keyPath,key.typeEn);
         if (keyPath[0] != '/productCenter')
           this.$router.push({
             path: key,
@@ -121,13 +120,6 @@
             }
           })
       },
-      // linkTo(path) {
-      //   this.$router.push({name: path})
-      //   this.defaultActive = '/' + path
-      //
-      //   console.log(this.defaultActive)
-      // },
-
       signInDialog() {
         this.dialogVisible = true
       },
@@ -138,9 +130,9 @@
           type: 'warning'
         }).then(() => {
           utils.deleteCookie('username')
-          this.$router.push('/index')
+          this.$router.push('/home')
           this.isAdmin = false
-          this.defaultActive = '/index'
+          this.defaultActive = '/home'
           this.$message({
             type: 'success',
             message: '已退出管理员'

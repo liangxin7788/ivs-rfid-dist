@@ -1,36 +1,30 @@
 <template>
   <div style="font-size: 30px">
-    <el-row :gutter="20">
-      <el-col :span="6" :offset="6"><div class="grid-content bg-purple">
-        <div style="line-height: 30px; text-align: left"  v-for="(applicationName, index) in applicationNames" :key="index">
-          <el-button
-            type="text"
-            @click="getAppDetail(applicationName)">
-            <span style="font-size: 20px">{{applicationName}}</span>
-          </el-button>
+    <el-row :gutter="20" v-for="(application, index) in applicationDetail" :key="index">
+      <el-col :span="6" :offset="4" style="margin-top: 40px">
+        <div class="grid-content bg-purple">
+          <img :src="application.images.split(',')[0]">
         </div>
-      </div></el-col>
+      </el-col>
 
-      <el-col :span="6"><div class="grid-content bg-purple">
-        {{description}}
+      <el-col :span="8"><div class="grid-content bg-purple">
+        <el-row style="margin-top: 20px; text-align: left; font-size: 20px">
+          <el-col>
+            <span>{{application.appType}}</span>
+          </el-col>
+
+          <el-col style="margin-top: 15px">
+            <span>{{application.description.slice(0,showLength)}}</span>
+            <span v-if="application.description.length > showLength">...</span>
+          </el-col>
+          <div>
+            <span v-if="showLength == 200" @click="showLength = application.description.length" style="text-decoration: underline; color: blue; margin-left: 500px">Read more</span>
+            <span v-else @click="showLength = 200" style="text-decoration: underline; color: blue; margin-left: 500px">Close...</span>
+          </div>
+        </el-row>
       </div></el-col>
     </el-row>
 
-    <div class="imageClass">
-      <el-carousel :interval="4000" type="card" height="200px">
-        <el-carousel-item v-for="item in imgList" :key="item">
-          <img :src="item" style="width: auto; height: auto">
-        </el-carousel-item>
-      </el-carousel>
-    </div>
-
-<!--    <div class="imageClass">-->
-<!--      <el-carousel :interval="5000" arrow="always">-->
-<!--        <el-carousel-item v-for="(img,index) in imgList" :key="index">-->
-<!--          <img :src="img" style="width: auto; height: auto">-->
-<!--        </el-carousel-item>-->
-<!--      </el-carousel>-->
-<!--    </div>-->
   </div>
 </template>
 
@@ -43,32 +37,17 @@
       data () {
         return {
           applicationDetail: [],
-          applicationNames: [],
-          // imgList:[
-          //   {url:require('../assets/ring.png')},
-          //   {url:require('../assets/book.jpg')},
-          //   {url:require('../assets/clothes.jpg')},
-          //   {url:require('../assets/tyre.jpg')}
-          // ],
-          imgList:[],
-          title: undefined,
-          description: undefined
+          showLength: 200,
+          title: undefined
         }
       },
       mounted () {
-        req.getRequest('/application/getAppNames',{}).then(res => {
-          this.applicationNames = res.data.result || undefined
-          this.getAppDetail(res.data.result[0])
-        }).catch(e => {
-          console.log(e);
-        })
+        this.getAppDetail()
       },
       methods: {
         getAppDetail (data) {
           req.getRequest('/application/getAppList',{appType: data}).then(res => {
             this.applicationDetail = res.data.result || undefined
-            this.imgList = this.applicationDetail.images.split(',') || undefined
-            this.description = this.applicationDetail.description || undefined
           }).catch(e => {
             console.log(e);
           })
