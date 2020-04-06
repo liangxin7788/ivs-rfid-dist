@@ -39,7 +39,7 @@ export default {
             route: '/admin/user'
           },
           {
-            title: '应用领域管理',
+            title: '解决方案管理',
             icon: '',
             route: '/admin/usedes'
           }

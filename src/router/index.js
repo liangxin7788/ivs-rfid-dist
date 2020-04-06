@@ -26,9 +26,14 @@ export default new Router({
       component: Home
     },
     {
+      path: '/aboutUs',
+      name: 'aboutUs',
+      component: AboutUs
+    },
+    {
       path: '/index',
       name: 'index',
-      component: AboutUs
+      component: Home
     },
     {
       name: 'productCenter',

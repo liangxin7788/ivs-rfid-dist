@@ -7,8 +7,8 @@
           <el-menu :default-active="defaultActive" class="el-menu-header" mode="horizontal"
                    @select="handleSelect" >
             <el-menu-item index="0"><img src="http://liangxin.fun/logo.jpg" style="width: 100px; height: 40px"></el-menu-item>
-            <el-menu-item index="/home">Home</el-menu-item>
-            <el-menu-item index="/index">About Us</el-menu-item>
+            <el-menu-item index="/index">Home</el-menu-item>
+            <el-menu-item index="/aboutUs">About Us</el-menu-item>
             <el-submenu index="/productCenter">
               <template slot="title">Product</template>
               <el-menu-item  :index="JSON.stringify(type)" v-for="(type, index) in typeList" :key="index">

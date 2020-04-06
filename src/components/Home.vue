@@ -8,12 +8,6 @@
       <span>{{newsDetail && newsDetail[0] && newsDetail[0].content || ''}}</span>
     </el-drawer>
 
-<!--    <el-carousel :interval="5000" class="aaa" style="height: 240px; width: 100%">   &lt;!&ndash;arrow="never"  设置了该属性就不会自动轮换照片&ndash;&gt;-->
-<!--      <el-carousel-item v-for="(img,index) in imgList" :key="index">-->
-<!--        <el-image :src="img.url" style="height: auto; width: 100%"></el-image>-->
-<!--      </el-carousel-item>-->
-<!--    </el-carousel>-->
-
     <div class="imageClass">
       <el-carousel :interval="4000" type="card" height="200px">
         <el-carousel-item v-for="item in imgList" :key="item">
@@ -22,7 +16,7 @@
       </el-carousel>
     </div>
 
-    <el-row style="margin-top: 100px; font-size: 20px">
+    <el-row style="margin-top: 100px; font-size: 16px">
       <el-col :span="7" :offset=3>
         <div class="grid-content bg-purple-dark">
           <span>Product</span>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -49,8 +43,8 @@
           <el-button
             type="text"
             @click="routerToDetail(product.id)"><i class="el-icon-star-on"></i>
-                <span class="newsCss" style="font-size: 18px; color: black">{{product.enName.slice(0,50)}}</span>
-                <span class="newsCss" style="font-size: 18px ; color: black" v-if="product.enName.length > 50">...</span>
+                <span class="newsCss" style="font-size: 14px; color: black">{{product.enName.slice(0,50)}}</span>
+                <span class="newsCss" style="font-size: 14px ; color: black" v-if="product.enName.length > 50">...</span>
           </el-button>
         </div>
       </el-col>
@@ -63,18 +57,15 @@
             <el-row>
               <el-col span="6">
                 <i class="el-icon-news"></i>
-                <span class="newsCss" style="font-size: 18px; color: black">{{company.title.slice(0,25)}}</span>
-                <span class="newsCss" style="font-size: 18px ; color: black" v-if="company.title.length > 25">...</span>
+                <span class="newsCss" style="font-size: 14px; color: black">{{company.title.slice(0,25)}}</span>
+                <span class="newsCss" style="font-size: 14px ; color: black" v-if="company.title.length > 25">...</span>
               </el-col>
-<!--              <el-col span="6" offset="12">-->
-<!--                <span style="font-size: 20px ; color: black">{{company.createAt.substring(0, 10)}}</span>-->
-<!--              </el-col>-->
             </el-row>
           </el-button>
         </div>
       </el-col>
 
-      <el-col :span="5" :offset="2" style="font-size: 18px">
+      <el-col :span="5" :offset="2" style="font-size: 14px">
         <div style="line-height: 48px; text-align: left; margin-top: 10px">
           <span><i class="el-icon-message"></i> E-Mail: sharon.loo@outlook.com</span><br>
           <span><i class="el-icon-mobile-phone"></i> Phone: +86 158 1429 5175</span><br>

@@ -178,10 +178,17 @@
           this.$message('添加成功！');
         }).finally(() => {
           this.dialogFormVisible = false
-
+          this.resetForm()
           this.getData()
         })
 
+      },
+      resetForm() {
+        this.form = {
+          images: '',
+          appType: '',
+          description: ''
+        }
       },
       closeModal () {
         this.dialogFormVisible = false

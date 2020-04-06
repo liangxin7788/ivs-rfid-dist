@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <el-carousel :interval="5000" arrow="always" class="aaa" style="height: 240px; width: 100%">
+      <el-carousel :interval="8000" arrow="always" class="aaa" style="height: 240px; width: 100%">
         <el-carousel-item v-for="(img,index) in imgList" :key="index">
           <el-image :src="img.url" style="height: auto; width: 100%"></el-image>
         </el-carousel-item>
@@ -16,15 +16,15 @@
       </div>
       <div class="b">
         <el-form label-width="80px">
-          <i class="el-icon-star-on"></i>Titel: <el-input type="input" v-model="titel" size="medium"></el-input>
-          <i class="el-icon-star-on"></i>Name: <el-input type="input" v-model="name" size="medium"></el-input>
-          <i class="el-icon-star-on"></i>E-mail: <el-input type="input" v-model="customerEmail" size="medium"></el-input>
-          <i class="el-icon-star-on"></i>Country: <el-input type="input" v-model="comeFrom" size="medium"></el-input>
-          Address: <el-input type="input" v-model="address" size="medium"></el-input>
-          Company: <el-input type="input" v-model="company" size="medium"></el-input>
-          Tel: <el-input type="input" v-model="phoneNumber" size="medium"></el-input>
-          <i class="el-icon-star-on"></i>Content: <br><el-input type="textarea" :autosize="{ minRows: 8, maxRows: 50}" v-model="massage" style="margin: 10px 0 0  0; width: 750px; text-align: left"></el-input>
-          <el-form-item style="text-align: center">
+          <i class="el-icon-star-on"></i>Titel: <el-input type="input" v-model="titel" size="medium;font-size: 20px"></el-input>
+          <i class="el-icon-star-on"></i>Name: <el-input type="input" v-model="name" size="medium;font-size: 20px"></el-input>
+          <i class="el-icon-star-on"></i>E-mail: <el-input type="input" v-model="customerEmail" size="medium;font-size: 20px"></el-input>
+          <i class="el-icon-star-on"></i>Country: <el-input type="input" v-model="comeFrom" size="medium;font-size: 20px"></el-input>
+          Address: <el-input type="input" v-model="address" size="medium;font-size: 20px"></el-input>
+          Company: <el-input type="input" v-model="company" size="medium;font-size: 20px"></el-input>
+          Tel: <el-input type="input" v-model="phoneNumber" size="medium;font-size: 20px"></el-input>
+          <i class="el-icon-star-on"></i>Content: <br><el-input type="textarea" :autosize="{ minRows: 8, maxRows: 50}" v-model="massage" style="margin: 10px 0 0  0; width: 750px; text-align: left; font-size: 20px"></el-input>
+          <el-form-item style="text-align: center; margin-top: 10px">
             <el-button type="primary" @click="onSubmit">Submit</el-button>
             <el-button @click="resetForm">Cancel</el-button>
           </el-form-item>
@@ -98,18 +98,27 @@
             this.$notify({
               title: 'fail to leaf your massage!',
               message: res.data.errorMsg,
-              offset: 50
+              offset: 80
             });
             else
               this.$notify({
                 title: 'Thank you for your message and we will contact you soon!',
-                offset: 50
+                offset: 50,
+                resetForm() {
+                  this.titel = ''
+                  this.name = ''
+                  this.customerEmail = ''
+                  this.massage = ''
+                  this.phoneNumber = ''
+                  this.comeFrom = ''
+                  this.company = ''
+                  this.address = ''
+                }
               });
           }).catch(e => {
             console.log(e);
             // if (e.data && e.data.errorMsg) { this.$Message.error(e.data.errorMsg) }
           })
-          this.resetForm()
         },
         resetForm() {
           this.titel = ''

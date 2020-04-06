@@ -1,28 +1,28 @@
 <template>
   <div>
-    <el-row :gutter="24" style="margin-top: 30px; font-size: 18px">
+    <el-row :gutter="24" style="margin-top: 30px">
       <el-col :span="2" offset=7>
-        <span>Home</span>
+        <span @click="routerToHome" style="text-decoration: underline; font-size: 16px">Home</span>
       </el-col>
 
       <el-col :span="2">
-        <span>About us</span>
+        <span @click="routerToAboutUs" style="text-decoration: underline; font-size: 16px">About us</span>
       </el-col>
 
       <el-col :span="2">
-        <span>Product</span>
+        <span @click="routerToProducts" style="text-decoration: underline; font-size: 16px">Product</span>
       </el-col>
 
       <el-col :span="2">
-        <span>Solution</span>
+        <span @click="routerToSolution" style="text-decoration: underline; font-size: 16px">Solution</span>
       </el-col>
 
       <el-col :span="2">
-        <span>Contact us</span>
+        <span @click="routerToContactUs" style="text-decoration: underline; font-size: 16px">Contact us</span>
       </el-col>
     </el-row>
 
-    <el-row style="margin-top: 60px; font-size: 18px">
+    <el-row style="margin-top: 100px; font-size: 16px">
       <el-col :span="12" offset="6">
         <span>@ Shenzhen IWINS Technologies Co., Ltd All rights reserved</span>
       </el-col>
@@ -32,7 +32,24 @@
 
 <script>
   export default {
-    name: "Footer"
+    name: "Footer",
+    methods: {
+      routerToHome (){
+        this.$router.push({name: `home`})
+      },
+      routerToAboutUs (){
+        this.$router.push({name: `aboutUs`})
+      },
+      routerToProducts (){
+        this.$router.push({name: `productCenter`})
+      },
+      routerToSolution (){
+        this.$router.push({name: `applicationExample`})
+      },
+      routerToContactUs (){
+        this.$router.push({name: `contactUs`})
+      }
+    }
   }
 </script>
 
