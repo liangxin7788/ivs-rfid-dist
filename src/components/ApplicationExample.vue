@@ -18,8 +18,8 @@
             <span v-if="application.description.length > showLength">...</span>
           </el-col>
           <div>
-            <span v-if="showLength == 200" @click="showLength = application.description.length" style="text-decoration: underline; color: blue; margin-left: 500px">Read more</span>
-            <span v-else @click="showLength = 200" style="text-decoration: underline; color: blue; margin-left: 500px">Close...</span>
+            <span v-if="showLength == 200" @click="showLength = application.description.length" style="text-decoration: underline; color: blue; margin-left: 75%">Read more</span>
+            <span v-else @click="showLength = 200" style="text-decoration: underline; color: blue; margin-left: 75%">Close...</span>
           </div>
         </el-row>
       </div></el-col>

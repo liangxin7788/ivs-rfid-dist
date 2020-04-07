@@ -3,9 +3,9 @@
     <!-- 头部-->
     <el-header >
       <el-row :gutter="20" >
-        <el-col :span="20" style="margin: 0 auto;float: none" >  
+        <el-col :span="20" style="margin: 0 auto;float: none" >
           <el-menu :default-active="defaultActive" class="el-menu-header" mode="horizontal"
-                   @select="handleSelect" >
+                   @select="handleSelect" style="margin-left: 25%">
             <el-menu-item index="0"><img src="http://liangxin.fun/logo.jpg" style="width: 100px; height: 40px"></el-menu-item>
             <el-menu-item index="/index">Home</el-menu-item>
             <el-menu-item index="/aboutUs">About Us</el-menu-item>
@@ -50,7 +50,6 @@
       >
 
         <el-form ref="form" :model="form" label-width="80px">
-
           <el-form-item label="账号">
             <el-input placeholder="请输入账号" v-model="form.username" clearable></el-input>
           </el-form-item>
@@ -90,7 +89,13 @@
     },
     watch: {
       $route (to, from1) {
-        console.log(to.path, from1.path);
+        this.defaultActive = to.path == '/home' ? '/index' : to.path
+        this.defaultActive = to.path == '/aboutUs' ? '/aboutUs' : to.path
+        this.defaultActive = to.path == '/productCenter' ? '//productCenter' : to.path
+        this.defaultActive = to.path == '/applicationExample' ? '/applicationExample' : to.path
+        this.defaultActive = to.path == '/contactUs' ? '/contactUs' : to.path
+
+        console.log('$route = ',to.path, from1.path,this.defaultActive);
         if(to.path === '/admin' && !utils.getCookie('username')) {
           this.dialogVisible = true
         }

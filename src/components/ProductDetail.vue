@@ -4,31 +4,40 @@
       <el-button @click="backPerv" icon="el-icon-arrow-left" round>Back</el-button>
     </div>
 
-    <el-row :gutter="20">
+    <el-row :gutter="20" style="margin-bottom: 50px">
       <el-col :span="6" :offset=6>
         <div class="grid-content bg-purple">
-          <img :src="bigImg || images[0]" style="width: 100%; height: 100%">
+          <img :src="bigImg || images[0]" style="width: 400px; height: 200px">
         </div>
-        <br>
-        <br>
-        <br>
-        <div>
-          <img v-for="item in images"  :src="item" @click="bigImg = item">
+        <div style="margin-top: 60px">
+          <img v-for="item in images"  :src="item" @click="bigImg = item" style="width: 100px; height: 50px">
         </div>
       </el-col>
 
       <el-col :span="8" :offset=1>
-        <div class="descriptionCss">
-          {{productDetailObj.description}}
-        </div>
+          <div v-for="card in cards" :key="card" class="box-card" style="height: 30%">
+            {{card }}
+          </div>
       </el-col>
     </el-row>
 
 
     <el-row :gutter="24">
-      <el-col :span="6" offset=6><div class="grid-content bg-purple">
-      </div></el-col>
+      <el-col :span="16" offset=4>
+        <div class="relatedCss">
+          <span style="font-size: 20px">Detailed Product Description</span>
+        </div>
+      </el-col>
     </el-row>
+
+    <el-row :gutter="24">
+      <el-col :span="10" offset=6>
+          <div v-for="param in detailParams" :key="card" style="text-align: left; font-size: 16px; line-height: 25px;margin-top: 10px; margin-bottom: 10px">
+            {{param }}
+          </div>
+      </el-col>
+    </el-row>
+
 
     <el-row :gutter="24">
       <el-col :span="16" offset=4><div class="relatedCss">
@@ -56,18 +65,22 @@
         productDetailObj: {},
         bigImg: '',
         productSimilars: [],
+        cards: [],
+        detailParams: [],
         images: []
       }
     },
     methods: {
       getProductDetail(id) {
-        console.log(this.productSimilars,id)
         req.getRequest("/productInfo/getProductDetail", {productId: id}
         ).then(res => {
           let data = res.data.result
           this.productDetailObj = data
+          // console.log(this.productDetailObj.description);
           this.images = data.images && data.images.split(',') || []
           this.productSimilars = data.productSimilars
+          this.cards = data.description.split('\n') || []
+          this.detailParams = data.detailParam.split('\n') || []
           console.log(data);
         }).catch(err => {
           console.log(err);
@@ -88,6 +101,7 @@
 <style scoped>
   .bar {
     display: flex;
+    margin-left: 15%;
   }
   .form{
     float: left;
@@ -103,9 +117,14 @@
   /*}*/
   .relatedCss {
     background: #99a9bf;
+    text-align: left;
   }
 
-  .descriptionCss {
-    float: left;
+  .box-card {
+    /*width: 500px;*/
+    /*height: 600px;*/
+    text-align: left;
+    font-size: 16px;
+    line-height: 25px;
   }
 </style>

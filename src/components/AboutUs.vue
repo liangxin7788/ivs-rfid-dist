@@ -88,4 +88,10 @@
 
 <style scoped>
 
+  .aaa  .el-carousel__container {
+    height: 240px;
+    margin: 0;
+    padding: 0;
+  }
+
 </style>

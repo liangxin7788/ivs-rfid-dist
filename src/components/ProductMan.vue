@@ -40,7 +40,7 @@
         prop="id"
         label="产品样品图">
         <template slot-scope="scope">
-          <el-image contain style="width: 100px;height: 100px" :src="scope.row.images"></el-image>
+          <el-image contain style="width: 100px;height: 100px" :src="scope.row.images.split(',')[0]"></el-image>
         </template>
       </el-table-column>
       <el-table-column
@@ -67,7 +67,6 @@
     </el-pagination>
 
     <!--添加产品-->
-
     <el-dialog title="添加产品" :visible.sync="dialogFormVisible">
       <el-form :model="proform" label-width="120px">
         <el-row>
@@ -119,6 +118,10 @@
         <el-form-item label="	产品描述" >
           <el-input type="textarea" :autosize="{ minRows: 8, maxRows: 50}" v-model="proform.description" placeholder="请输入产品描述信息"></el-input>
         </el-form-item>
+
+        <el-form-item label="	产品具体参数" >
+          <el-input type="textarea" :autosize="{ minRows: 8, maxRows: 50}" v-model="proform.detailParam" placeholder="请输入产品具体参数信息"></el-input>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -143,6 +146,7 @@ import * as req from '@/utils/api'
           cnName: '',
           enName: '',
           description: '',
+          detailParam: '',
           productTypeCodes: '',
           model: '',
           size: '',
@@ -175,6 +179,10 @@ import * as req from '@/utils/api'
           {
             prop: 'readingRange',
             label: '读距'
+          },
+          {
+            prop: 'detailParam',
+            label: '具体参数'
           }
         ],
         pageSize: 50, // 一页显示多少条数据，常量。
