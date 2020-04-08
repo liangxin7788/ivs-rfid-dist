@@ -46,12 +46,32 @@
     </el-row>
 
     <el-row :gutter="24">
+<!--      <el-col :span="10" offset=6>-->
+<!--        <div v-for="item in productSimilars">-->
+<!--          <img :src="item.imageUrl" @click="getProductDetail(item.productId)" style="width: 40%; height: 50%">-->
+<!--          <span>{{item.title}}</span>-->
+<!--        </div>-->
+<!--      </el-col>-->
       <el-col :span="10" offset=6>
-        <div v-for="item in productSimilars">
-          <img :src="item.imageUrl" @click="getProductDetail(item.productId)" style="width: 40%; height: 50%">
-          <span>{{item.title}}</span>
-        </div>
+        <el-carousel autoplay="false" type="card" arrow="always" indicator-position="none" height="200px">
+          <el-carousel-item v-for="item in productSimilars" :key="item">
+            <el-row>
+              <el-col>
+                <img :src="item.imageUrl" @click="getProductDetail(item.productId)" style="width: 70%; height: 80%">
+              </el-col>
+              <el-col>
+                <span>{{item.title}}</span>
+              </el-col>
+            </el-row>
+          </el-carousel-item>
+        </el-carousel>
       </el-col>
+
+<!--      <div v-for="item in productSimilars">-->
+<!--        <img :src="item.imageUrl" @click="getProductDetail(item.productId)" style="width: 40%; height: 50%">-->
+<!--        <span>{{item.title}}</span>-->
+<!--      </div>-->
+
     </el-row>
   </div>
 </template>

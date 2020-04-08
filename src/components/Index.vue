@@ -5,7 +5,7 @@
       <el-row :gutter="20" >
         <el-col :span="20" style="margin: 0 auto;float: none" >
           <el-menu :default-active="defaultActive" class="el-menu-header" mode="horizontal"
-                   @select="handleSelect" style="margin-left: 25%">
+                   @select="handleSelect" style="margin-left: 18%">
             <el-menu-item index="0"><img src="http://liangxin.fun/logo.jpg" style="width: 100px; height: 40px"></el-menu-item>
             <el-menu-item index="/index">Home</el-menu-item>
             <el-menu-item index="/aboutUs">About Us</el-menu-item>
@@ -26,6 +26,14 @@
                   logout</el-button>
               </div>
             </el-menu-item>
+            <el-form style="margin-top: 18px" inline label-width="50px" label-position="left">
+              <el-form-item>
+                <el-input v-model="productTitle"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" plain @click="doSearch">Search</el-button>
+              </el-form-item>
+            </el-form>
           </el-menu>
         </el-col>
       </el-row>
@@ -79,6 +87,7 @@
       return {
         isAdmin: false,
         defaultActive: '/home',
+        productTitle: '',
         typeList: [],
         dialogVisible: false,
         form:{
@@ -95,7 +104,7 @@
         this.defaultActive = to.path == '/applicationExample' ? '/applicationExample' : to.path
         this.defaultActive = to.path == '/contactUs' ? '/contactUs' : to.path
 
-        console.log('$route = ',to.path, from1.path,this.defaultActive);
+        // console.log('$route = ',to.path, from1.path,this.defaultActive);
         if(to.path === '/admin' && !utils.getCookie('username')) {
           this.dialogVisible = true
         }
@@ -124,6 +133,14 @@
               tag: JSON.parse(key).typeCode
             }
           })
+      },
+      doSearch(){
+        this.$router.push({
+          name: `productCenter`,
+          query: {
+            title: this.productTitle
+          }
+        })
       },
       signInDialog() {
         this.dialogVisible = true

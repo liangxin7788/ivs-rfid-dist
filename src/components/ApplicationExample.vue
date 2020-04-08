@@ -18,8 +18,8 @@
             <span v-if="application.description.length > showLength">...</span>
           </el-col>
           <div>
-            <span v-if="showLength == 200" @click="showLength = application.description.length" style="text-decoration: underline; color: blue; margin-left: 75%">Read more</span>
-            <span v-else @click="showLength = 200" style="text-decoration: underline; color: blue; margin-left: 75%">Close...</span>
+            <span v-if="showLength == 200" @click="showMsg(index, true)" style="text-decoration: underline; color: blue; margin-left: 75%">Read more</span>
+            <span v-else @click="showMsg(index, false)" style="text-decoration: underline; color: blue; margin-left: 75%">Close...</span>
           </div>
         </el-row>
       </div></el-col>
@@ -30,30 +30,40 @@
 
 <script>
   import * as req from '@/utils/api'
-    export default {
-      name: "ApplicationExample",
-      components: {
+  export default {
+    name: "ApplicationExample",
+    components: {
+    },
+    data () {
+      return {
+        applicationDetail: [],
+        showLength: 200,
+        // show: false,
+        title: undefined
+      }
+    },
+    mounted () {
+      this.getAppDetail()
+    },
+    methods: {
+      showMsg (index, show) {
+        console.log('aaaaa: ' + index + ', bbb: ' + show)
+        if(show)
+          this.showLength = this.applicationDetail[index].description.length
+        else
+          this.showLength = 200
+        this.i = index
+        console.log('aaaaa2: ' + index + ', bbb: ' + show)
       },
-      data () {
-        return {
-          applicationDetail: [],
-          showLength: 200,
-          title: undefined
-        }
-      },
-      mounted () {
-        this.getAppDetail()
-      },
-      methods: {
-        getAppDetail (data) {
-          req.getRequest('/application/getAppList',{appType: data}).then(res => {
-            this.applicationDetail = res.data.result || undefined
-          }).catch(e => {
-            console.log(e);
-          })
-        }
+      getAppDetail (data) {
+        req.getRequest('/application/getAppList',{appType: data}).then(res => {
+          this.applicationDetail = res.data.result || undefined
+        }).catch(e => {
+          console.log(e);
+        })
       }
     }
+  }
 </script>
 
 <style scoped>

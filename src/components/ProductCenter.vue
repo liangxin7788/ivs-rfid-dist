@@ -1,23 +1,23 @@
 <template>
   <div class="mainContent">
 
-    <el-form class="contentForm" inline label-width="100px" label-position="right">
-      <el-form-item label="product name">
-        <el-input v-model="productTitle" placeholder="enter name"></el-input>
-      </el-form-item>
+<!--    <el-form class="contentForm" inline label-width="100px" label-position="right">-->
+<!--      <el-form-item label="product name">-->
+<!--        <el-input v-model="productTitle" placeholder="enter name"></el-input>-->
+<!--      </el-form-item>-->
 
-      <el-form-item label="tag type">
-        <el-select v-model="productTypeCode" clearable>
-          <el-option :value="type.typeCode" v-for="type in typeList" :key="type">
-            {{type.typeEn}}
-          </el-option>
-        </el-select>
-      </el-form-item>
+<!--      <el-form-item label="tag type">-->
+<!--        <el-select v-model="productTypeCode" clearable>-->
+<!--          <el-option :value="type.typeCode" v-for="type in typeList" :key="type">-->
+<!--            {{type.typeEn}}-->
+<!--          </el-option>-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
 
-      <el-form-item>
-        <el-button type="primary" plain @click="doSearch">Search</el-button>
-      </el-form-item>
-    </el-form>
+<!--      <el-form-item>-->
+<!--        <el-button type="primary" plain @click="doSearch">Search</el-button>-->
+<!--      </el-form-item>-->
+<!--    </el-form>-->
 
     <el-table
       @row-click="handleRowClick"
@@ -26,7 +26,7 @@
       fit
       size="medium"
       min-height="500"
-      style="width: 67%;margin: 0 auto"
+      style="width: 67%;margin: 30px auto"
     >
       <el-table-column
         label="Sample Picture"
@@ -104,8 +104,11 @@
     watch: {
       '$route': function () {
         let query = this.$route.query
-        console.log(query.tag)
+
         this.productTypeCode = query.tag
+        let title = this.$route.query.title
+        console.log(query.title)
+        this.productTitle = title
         this.doSearch()
       }
     },
