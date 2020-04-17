@@ -84,6 +84,7 @@
           <el-col :span="8">
             <el-form-item label="产品图片" >
               <el-upload
+                ref="uploadFile"
                 action=""
                 :on-change="handOnchange"
                 multiple
@@ -103,6 +104,9 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <el-form-item >
+          <img style="width: 100px;height: auto" v-for="item in proform.oldImages" :key="item" :src="item" :alt="item">
+        </el-form-item>
         <el-form-item label="产品中文名" >
           <el-input v-model="proform.cnName" placeholder="请输入中文名"></el-input>
         </el-form-item>
@@ -153,6 +157,7 @@ import * as req from '@/utils/api'
         typeList: [],
         dialogFormVisible: false,
         proform: {
+          id: null,
           images: [],
           cnName: '',
           enName: '',
@@ -206,9 +211,19 @@ import * as req from '@/utils/api'
     mounted() {
       this.getTypes()
     },
+    watch: {
+      dialogFormVisible(value) {
+        if(value) {
+          this.defaultForm = JSON.parse(JSON.stringify(this.proform))
+        }
+        else {
+          this.proform = JSON.parse(JSON.stringify(this.defaultForm))
+        }
+      }
+    },
     methods: {
       handOnchange(file, fileList) {
-        this.proform.images = fileList.map(item => item.raw)
+          this.proform.images = fileList.map(item => item.raw)
       },
       proCommit() {
         let data = new FormData()
@@ -217,12 +232,16 @@ import * as req from '@/utils/api'
 
         for (const key in this.proform) {
           if (this.proform.hasOwnProperty(key)) {
-            const element = this.proform[key];
+            const element = this.proform[key];            
 
             if(key == 'images')
               element.forEach(item => {
                 data.append(key,item)
               })
+            else if(key == 'oldImages')
+            {
+              data.append('oldImages',this.proform.oldImages.join(','))
+            }
             else
               data.append(key,element)
           }
@@ -234,6 +253,7 @@ import * as req from '@/utils/api'
           this.$message('添加成功！');
         }).finally(() => {
           this.dialogFormVisible = false
+          this.$refs.uploadFile.clearFiles()
 
           this.getProducts()
         })
@@ -303,6 +323,29 @@ import * as req from '@/utils/api'
       },
       doEdit (data) {
         console.log(data)
+
+        this.dialogFormVisible = true
+        req.getRequest("/productInfo/getProductDetail", {productId: data.id}
+        ).then(res => {
+          let data = res.data.result
+          let keys = ['id','images','cnName','enName','description','detailParam','productTypeCodes','model','size','application','chipType','readingRange']
+
+          for (const key in keys) {
+            if (keys.hasOwnProperty(key)) {
+              const element = keys[key]
+
+              if(element == 'images') {
+                this.proform.oldImages = data[element].split(',') || []
+              }
+              else
+                this.proform[element] = data[element]
+            }
+          }
+
+        }).catch(err => {
+          console.log(err);
+        })
+
       }
     }
   }
