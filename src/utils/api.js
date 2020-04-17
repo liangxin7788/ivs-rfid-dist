@@ -6,6 +6,9 @@ axios.interceptors.request.use(config => {
   if (config.url !== '/userLogin') {
     config.headers.token = utils.getCookie('token')
   }
+
+  console.log(config.headers)
+
   return config;
 }, () => {
   Message.error({message: '请求超时!'});
@@ -83,5 +86,14 @@ export const getRequest = (url, params = {}) => {
     method: 'get',
     url: `${base}${url}`,
     params
+  });
+}
+
+export const download = (url, params = {}) => {
+  return axios({
+    method: 'get',
+    url: `${base}${url}`,
+    params,
+    responseType:'blob'
   });
 }
