@@ -23,14 +23,6 @@
         </el-carousel-item>
       </el-carousel>
     </div>
-
-<!--    <div class="imageClass">-->
-<!--      <el-carousel :interval="5000" arrow="always">-->
-<!--        <el-carousel-item v-for="(img,index) in imgList" :key="index">-->
-<!--          <img :src="img" style="width: auto; height: auto">-->
-<!--        </el-carousel-item>-->
-<!--      </el-carousel>-->
-<!--    </div>-->
   </div>
 </template>
 
@@ -44,12 +36,6 @@
         return {
           applicationDetail: [],
           applicationNames: [],
-          // imgList:[
-          //   {url:require('../assets/ring.png')},
-          //   {url:require('../assets/book.jpg')},
-          //   {url:require('../assets/clothes.jpg')},
-          //   {url:require('../assets/tyre.jpg')}
-          // ],
           imgList:[],
           title: undefined,
           description: undefined

@@ -38,6 +38,7 @@
       <el-table-column
         fixed
         prop="id"
+        width="150"
         label="产品样品图">
         <template slot-scope="scope">
           <el-image contain style="width: 100px;height: 100px" :src="scope.row.images.split(',')[0]"></el-image>
@@ -46,7 +47,17 @@
       <el-table-column
         v-for="col in tableColumns"
         :prop="col.prop"
-        :label="col.label">
+        :label="col.label" width="170">
+      </el-table-column>
+      <el-table-column
+        prop="detailParam"
+        label="具体参数"
+        width="400">
+        <template slot-scope="scope">
+          <pre>
+            {{scope.row.detailParam}}
+          </pre>
+        </template>
       </el-table-column>
       <el-table-column
         label="操作"
@@ -179,11 +190,11 @@ import * as req from '@/utils/api'
           {
             prop: 'readingRange',
             label: '读距'
-          },
-          {
-            prop: 'detailParam',
-            label: '具体参数'
           }
+          // {
+          //   prop: 'detailParam',
+          //   label: '具体参数'
+          // }
         ],
         pageSize: 50, // 一页显示多少条数据，常量。
         total: 1,

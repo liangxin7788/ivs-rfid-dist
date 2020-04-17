@@ -16,7 +16,7 @@
 
       <el-col :span="8" :offset=1>
           <div v-for="card in cards" :key="card" class="box-card" style="height: 30%">
-            {{card }}
+            {{card}}
           </div>
       </el-col>
     </el-row>
