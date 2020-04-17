@@ -7,18 +7,18 @@
         </div>
       </el-col>
 
-      <el-col :span="8"><div class="grid-content bg-purple">
+      <el-col :span="8" :pull="1"><div class="grid-content bg-purple">
         <el-row style="margin-top: 20px; text-align: left; font-size: 20px">
           <el-col>
             <span>{{application.appType}}</span>
           </el-col>
 
           <el-col style="margin-top: 15px">
-            <span>{{application.description.slice(0,showLength)}}</span>
-            <span v-if="application.description.length > showLength">...</span>
+            <span>{{application.description.slice(0,application.showLength)}}</span>
+            <span v-if="application.description.length > application.showLength">...</span>
           </el-col>
           <div>
-            <span v-if="showLength == 200" @click="showMsg(index, true)" style="text-decoration: underline; color: blue; margin-left: 75%">Read more</span>
+            <span v-if="application.showLength == 200" @click="showMsg(index, true)" style="text-decoration: underline; color: blue; margin-left: 75%">Read more</span>
             <span v-else @click="showMsg(index, false)" style="text-decoration: underline; color: blue; margin-left: 75%">Close...</span>
           </div>
         </el-row>
@@ -49,15 +49,18 @@
       showMsg (index, show) {
         console.log('aaaaa: ' + index + ', bbb: ' + show)
         if(show)
-          this.showLength = this.applicationDetail[index].description.length
+          this.applicationDetail[index].showLength = this.applicationDetail[index].description.length
         else
-          this.showLength = 200
+           this.applicationDetail[index].showLength = 200
         this.i = index
         console.log('aaaaa2: ' + index + ', bbb: ' + show)
       },
       getAppDetail (data) {
         req.getRequest('/application/getAppList',{appType: data}).then(res => {
-          this.applicationDetail = res.data.result || undefined
+          this.applicationDetail = res.data.result && res.data.result.map(item => ({
+            ...item,
+            showLength: 200
+          })) || undefined          
         }).catch(e => {
           console.log(e);
         })
