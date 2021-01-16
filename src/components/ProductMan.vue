@@ -227,13 +227,10 @@ import * as req from '@/utils/api'
       },
       proCommit() {
         let data = new FormData()
-
         console.log(this.proform);
-
         for (const key in this.proform) {
           if (this.proform.hasOwnProperty(key)) {
             const element = this.proform[key];            
-
             if(key == 'images')
               element.forEach(item => {
                 data.append(key,item)

@@ -5,7 +5,9 @@
       :title="newsDetailTitle"
       :visible.sync="drawer"
       :with-header="true">
-      <span>{{newsDetail && newsDetail[0] && newsDetail[0].content || ''}}</span>
+      <div style="text-align: left; line-height: 30px">
+        <span style="margin-left: 20px;">{{newsDetail && newsDetail[0] && newsDetail[0].content || ''}}</span>
+      </div>
     </el-drawer>
 
     <div class="imageClass">
@@ -124,7 +126,7 @@
         this.drawer = true
         req.getRequest('/company/getNews',{newsId: data}).then(res => {
           this.newsDetail = res.data.result || undefined,
-            this.newsDetailTitle = res.data.result[0].title || undefined
+          this.newsDetailTitle = res.data.result[0].title || undefined
         }).catch(e => {
           console.log(e);
         })

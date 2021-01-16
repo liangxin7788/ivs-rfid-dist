@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <!-- 头部-->
-    <el-header >
+    <el-header>
       <el-row :gutter="20" >
         <el-col :span="20" style="margin: 0 auto;float: none" >
           <el-menu :default-active="defaultActive" class="el-menu-header" mode="horizontal"

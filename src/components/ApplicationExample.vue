@@ -8,7 +8,7 @@
       </el-col>
 
       <el-col :span="8" :pull="1"><div class="grid-content bg-purple">
-        <el-row style="margin-top: 20px; text-align: left; font-size: 20px">
+        <el-row style="margin-top: 20px; text-align: left; font-size: 16px">
           <el-col>
             <span>{{application.appType}}</span>
           </el-col>
@@ -60,7 +60,7 @@
           this.applicationDetail = res.data.result && res.data.result.map(item => ({
             ...item,
             showLength: 200
-          })) || undefined          
+          })) || undefined
         }).catch(e => {
           console.log(e);
         })
