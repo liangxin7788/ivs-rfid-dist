@@ -40,7 +40,7 @@
     </el-header>
 
     <!--    内容区-->
-    <el-main class="navLi" style="min-height: 700px;padding: 0;">
+    <el-main class="navLi">
       <router-view/>
     </el-main>
 
@@ -235,5 +235,9 @@
   .loginBtn{
     width: 50%;
   }
-
+  .navLi{
+    height: calc(100vh - 260px);
+    padding: 0;
+    overflow-y: scroll;
+  }
 </style>
