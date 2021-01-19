@@ -147,8 +147,7 @@
     margin-right: 30px;
     width: 350px;
   }
-  .column-style{
-  }
+
   .aaa  .el-carousel__container {
     height: 240px;
     margin: 0;

@@ -16,14 +16,14 @@
       </div>
       <div class="b">
         <el-form label-width="80px">
-          <i class="el-icon-star-on"></i>Titel: <el-input type="input" v-model="titel" size="medium;font-size: 20px"></el-input>
+          <!-- <i class="el-icon-star-on"></i>Titel: <el-input type="input" v-model="titel" size="medium;font-size: 20px"></el-input> -->
           <i class="el-icon-star-on"></i>Name: <el-input type="input" v-model="name" size="medium;font-size: 20px"></el-input>
           <i class="el-icon-star-on"></i>E-mail: <el-input type="input" v-model="customerEmail" size="medium;font-size: 20px"></el-input>
-          <i class="el-icon-star-on"></i>Country: <el-input type="input" v-model="comeFrom" size="medium;font-size: 20px"></el-input>
+          <i class="el-icon-star-on"></i>Tel: <el-input type="input" v-model="phoneNumber" size="medium;font-size: 20px"></el-input>
           Address: <el-input type="input" v-model="address" size="medium;font-size: 20px"></el-input>
           Company: <el-input type="input" v-model="company" size="medium;font-size: 20px"></el-input>
-          Tel: <el-input type="input" v-model="phoneNumber" size="medium;font-size: 20px"></el-input>
-          <i class="el-icon-star-on"></i>Content: <br><el-input type="textarea" :autosize="{ minRows: 8, maxRows: 50}" v-model="massage" style="margin: 10px 0 0  0; width: 750px; text-align: left; font-size: 20px"></el-input>
+          <!-- Tel: <el-input type="input" v-model="phoneNumber" size="medium;font-size: 20px"></el-input> -->
+          <i class="el-icon-star-on"></i>Content: <br><el-input type="textarea" :autosize="{ minRows: 3, maxRows: 50}" v-model="massage" style="margin: 10px 0 0  0; width: 750px; text-align: left; font-size: 20px"></el-input>
           <el-form-item style="text-align: center; margin-top: 10px">
             <el-button type="primary" @click="onSubmit">Submit</el-button>
             <el-button @click="resetForm">Cancel</el-button>
@@ -157,6 +157,7 @@
    width: 30%;
   }
   .b {
+    margin-top: 60px;
     text-align: left;
     float: right;
     font-size: 18px;

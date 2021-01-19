@@ -210,6 +210,7 @@
   .myFooter {
     background-color: #303848;
     color: rgb(222, 222, 222);
+    /* height: 90px; */
   }
 
   .el-aside {

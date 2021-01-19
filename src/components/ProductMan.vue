@@ -103,6 +103,22 @@
               </el-select>
             </el-form-item>
           </el-col>
+
+          <el-col :span="6">
+            <el-form-item label="产品PDF介绍">
+                <el-upload
+                ref="uploadFile"
+                action=""
+                :on-change="handOnchangePDF"
+                multiple
+                :limit="1"
+                :show-file-list="true"
+                :auto-upload="false">
+                <el-button size="small" type="primary">上传PDF</el-button>
+              </el-upload>
+            </el-form-item>
+          </el-col>
+
         </el-row>
         <el-form-item >
           <img style="width: 100px;height: auto" v-for="item in proform.oldImages" :key="item" :src="item" :alt="item">
@@ -157,8 +173,9 @@ import * as req from '@/utils/api'
         typeList: [],
         dialogFormVisible: false,
         proform: {
-          id: null,
+          id: '',
           images: [],
+          pdf: [],
           cnName: '',
           enName: '',
           description: '',
@@ -225,13 +242,16 @@ import * as req from '@/utils/api'
       handOnchange(file, fileList) {
           this.proform.images = fileList.map(item => item.raw)
       },
+      handOnchangePDF(file, fileList) {
+          this.proform.pdf = fileList.map(item => item.raw)
+      },
       proCommit() {
         let data = new FormData()
         console.log(this.proform);
         for (const key in this.proform) {
           if (this.proform.hasOwnProperty(key)) {
             const element = this.proform[key];            
-            if(key == 'images')
+            if(key == 'images' || key == 'pdf')
               element.forEach(item => {
                 data.append(key,item)
               })
